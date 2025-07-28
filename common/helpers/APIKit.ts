@@ -23,6 +23,18 @@ export const APIKit = {
         getDoctor: () => {
             const url = `/doctors`;
             return client.get(url);
+        },
+        getSingleDoctor: (id: any) => {
+            const url = `/doctors/${id}`;
+            return client.get(url);
+        },
+        addDoctor: (payload: any) => {
+            const url = `/doctors`;
+            return client.post(url, payload);
+        },
+        deleteDoctor: (id: any) => {
+            const url = `/doctors/${id}`;
+            return client.delete(url);
         }
     },
 

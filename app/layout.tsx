@@ -3,7 +3,7 @@ import { Geist } from 'next/font/google';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/providers/AuthProvider';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QueryProvider } from '@/context/providers/QueryProvider';
 
@@ -33,7 +33,18 @@ export default function RootLayout({
         <QueryProvider>
           <AuthProvider>
             {children}
-            <ToastContainer position="top-right" autoClose={3000} />
+            <ToastContainer
+              className="custom-toast"
+              position="top-right"
+              autoClose={1000}
+              hideProgressBar={true}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              theme="light"
+              transition={Slide}
+            />
           </AuthProvider>
         </QueryProvider>
       </body>

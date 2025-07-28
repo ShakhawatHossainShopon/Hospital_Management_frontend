@@ -18,6 +18,7 @@ interface ReusableSelectProps {
   className?: string;
   label: string;
   required?: boolean;
+  error?: string;
 }
 
 export function ReusableSelect({
@@ -28,13 +29,14 @@ export function ReusableSelect({
   placeholder = 'Select an option',
   className = 'w-full mt-2 text-xs ',
   required,
+  error,
   ...props
 }: ReusableSelectProps) {
   return (
     <>
       <Label required={required}>{label}</Label>
       <Select onValueChange={onChange} value={value} defaultValue="" {...props}>
-        <SelectTrigger className={className}>
+        <SelectTrigger className={`${className} ${error ? 'border-2 border-red-600' : ''}`}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>

@@ -6,31 +6,39 @@ import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
+import { useState } from 'react';
+import { Textarea } from '@/components/ui/textarea';
+import { APIKit } from '@/common/helpers/APIKit';
+import { toast } from 'react-toastify';
+import { useParams, useRouter } from 'next/navigation';
 
 // 1. Define Zod schema with error messages
 const formSchema = z.object({
   title: z.string().min(1, { message: 'Title is required' }),
-  firstname: z.string().min(1, { message: 'Firstname is required' }),
-  workingOrganization: z.string().min(1, { message: 'Working Organization is required' }),
-  availableTime: z.string().min(1, { message: 'Available Time is required' }),
-  bmdcCode: z.string().min(1, { message: 'BMDC Code is required' }),
-  jobDesignation: z.string().min(1, { message: 'Job Designation is required' }),
-  bookingPhone: z.string().min(1, { message: 'Booking Phone is required' }),
-  gender: z.string().min(1, { message: 'Gender is required' }),
-  medicalDegree: z.string().min(1, { message: 'Medical Degree is required' }),
-  consultancyFee: z.string().min(1, { message: 'Consultancy Fee is required' }),
-  mobile: z.string().min(1, { message: 'Mobile is required' }),
-  provideServiceFor: z.string().min(1, { message: 'Provide Service is required' }),
-  aboutSpecialist: z.string().min(1, { message: 'Description is required' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  speciality: z.string().min(1, { message: 'Speciality is required' }),
-  password: z.string().min(1, { message: 'Password is required' }),
-  startPractising: z.string().min(1, { message: 'Start Practising is required' }),
-  achievements: z.string().min(1, { message: 'Achievements is required' }),
+  firstname: z.string().min(1, { message: 'firstname is required' }),
+  lastname: z.string().min(1, { message: 'lastname is required' }),
+  bmdc_code: z.string().min(1, { message: 'bmdc code is required' }),
+  booking_phone: z.string().min(1, { message: 'booking phone is required' }),
+  gender: z.string().min(1, { message: 'gender is required' }),
+  consultancy_fee: z.string().min(1, { message: 'consultancy_fee is required' }),
+  mobile: z.string().min(1, { message: 'mobile is required' }),
+  email: z.email().min(1, { message: 'email is required' }),
+  password: z.string().min(1, { message: 'password is required' }),
+  working_place: z.string(),
+  available_days: z.string(),
+  job_designation: z.string(),
+  degree_name: z.string(),
+  provide_service: z.string(),
+  about: z.string(),
+  speciality: z.string(),
+  starting_pratice: z.string(),
+  achievement: z.string(),
 });
 
 const Page = () => {
-  // 2. Infer TypeScript type from schema
+  const router = useRouter();
+  const { customerId } = useParams();
+  const [loading, setLoading] = useState(false);
   type FormData = z.infer<typeof formSchema>;
 
   const {
@@ -50,6 +58,20 @@ const Page = () => {
 
   const onSubmit = (data: FormData) => {
     console.log(data);
+
+    setLoading(true);
+    APIKit.doctor
+      .addDoctor(data)
+      .then(() => {
+        toast.success('Doctor added successfully');
+        router.push(`/${customerId}/doctor`);
+      })
+      .catch(() => {
+        toast.error('Something went wrong!');
+      })
+      .finally(() => {
+        setLoading(false); // ✅ End loading
+      });
   };
   return (
     <div>
@@ -66,18 +88,20 @@ const Page = () => {
               render={({ field }) => (
                 <ReusableSelect
                   label="Title"
+                  required={true}
                   options={options}
                   value={field.value}
                   onChange={field.onChange}
                   placeholder="Select Title"
+                  error={errors.gender?.message}
                 />
               )}
             />
-            {errors.title && <p className="text-xs text-red-500">{errors.title.message}</p>}
           </div>
           <div className="w-full">
             <Input
               label="Firstname"
+              required={true}
               placeholder="Enter Firstname"
               {...register('firstname')}
               error={errors.firstname?.message}
@@ -85,10 +109,11 @@ const Page = () => {
           </div>
           <div className="w-full">
             <Input
-              label="Working Organization"
-              placeholder="Enter Working Organization"
-              {...register('workingOrganization')}
-              error={errors.workingOrganization?.message}
+              label="Lastname"
+              required={true}
+              placeholder="Enter Firstname"
+              {...register('lastname')}
+              error={errors.lastname?.message}
             />
           </div>
         </div>
@@ -96,26 +121,27 @@ const Page = () => {
         <div className="md:flex gap-6 w-full">
           <div className="w-full">
             <Input
+              label="Working Organization"
+              placeholder="Enter Working Organization"
+              {...register('working_place')}
+              error={errors.working_place?.message}
+            />
+          </div>
+          <div className="w-full">
+            <Input
               label="Available Time"
               placeholder="Enter Available Time"
-              {...register('availableTime')}
-              error={errors.availableTime?.message}
+              {...register('available_days')}
+              error={errors.available_days?.message}
             />
           </div>
           <div className="w-full">
             <Input
               label="BMDC Code"
+              required={true}
               placeholder="Enter BMDC Code"
-              {...register('bmdcCode')}
-              error={errors.bmdcCode?.message}
-            />
-          </div>
-          <div className="w-full">
-            <Input
-              label="Job Designation"
-              placeholder="Enter Job Designation"
-              {...register('jobDesignation')}
-              error={errors.jobDesignation?.message}
+              {...register('bmdc_code')}
+              error={errors.bmdc_code?.message}
             />
           </div>
         </div>
@@ -123,10 +149,19 @@ const Page = () => {
         <div className="md:flex gap-6 w-full">
           <div className="w-full">
             <Input
+              label="Job Designation"
+              placeholder="Enter Job Designation"
+              {...register('job_designation')}
+              error={errors.job_designation?.message}
+            />
+          </div>
+          <div className="w-full">
+            <Input
+              required={true}
               label="Booking Phone"
               placeholder="Enter Booking Phone"
-              {...register('bookingPhone')}
-              error={errors.bookingPhone?.message}
+              {...register('booking_phone')}
+              error={errors.booking_phone?.message}
             />
           </div>
           <div className="w-full">
@@ -136,22 +171,15 @@ const Page = () => {
               defaultValue=""
               render={({ field }) => (
                 <ReusableSelect
+                  required={true}
                   label="Gender"
                   options={genderOptions}
                   value={field.value}
                   onChange={field.onChange}
                   placeholder="Select Gender"
+                  error={errors.gender?.message}
                 />
               )}
-            />
-            {errors.gender && <p className="text-xs text-red-500">{errors.gender.message}</p>}
-          </div>
-          <div className="w-full">
-            <Input
-              label="Medical Degree"
-              placeholder="Enter Medical Degree"
-              {...register('medicalDegree')}
-              error={errors.medicalDegree?.message}
             />
           </div>
         </div>
@@ -159,27 +187,30 @@ const Page = () => {
         <div className="md:flex gap-6 w-full">
           <div className="w-full">
             <Input
+              label="Medical Degree"
+              placeholder="Enter Medical Degree"
+              {...register('degree_name')}
+              error={errors.degree_name?.message}
+            />
+          </div>
+          <div className="w-full">
+            <Input
               label="Consultancy Fee"
+              required={true}
+              type="number"
               placeholder="Enter Consultancy Fee"
-              {...register('consultancyFee')}
-              error={errors.consultancyFee?.message}
+              {...register('consultancy_fee')}
+              error={errors.consultancy_fee?.message}
             />
           </div>
           <div className="w-full">
             <Input
               label="Mobile"
+              required={true}
               type="number"
               placeholder="Enter Mobile Number"
               {...register('mobile')}
               error={errors.mobile?.message}
-            />
-          </div>
-          <div className="w-full">
-            <Input
-              label="Provide Service For"
-              placeholder="Enter Service Provided"
-              {...register('provideServiceFor')}
-              error={errors.provideServiceFor?.message}
             />
           </div>
         </div>
@@ -189,13 +220,14 @@ const Page = () => {
             <Input
               label="About The Specialist"
               placeholder="Enter Description"
-              {...register('aboutSpecialist')}
-              error={errors.aboutSpecialist?.message}
+              {...register('about')}
+              error={errors.about?.message}
             />
           </div>
           <div className="w-full">
             <Input
               label="Email"
+              required={true}
               placeholder="Enter Email"
               {...register('email')}
               error={errors.email?.message}
@@ -214,6 +246,15 @@ const Page = () => {
         <div className="md:flex gap-6 w-full">
           <div className="w-full">
             <Input
+              label="Provide Service For"
+              placeholder="Enter Service Provided"
+              {...register('provide_service')}
+              error={errors.provide_service?.message}
+            />
+          </div>
+          <div className="w-full">
+            <Input
+              required={true}
               label="Password"
               placeholder="Enter Password"
               type="password"
@@ -223,20 +264,21 @@ const Page = () => {
           </div>
           <div className="w-full">
             <Input
+              type="date"
               label="Start Practising"
               placeholder="Enter Start Practising Date"
-              {...register('startPractising')}
-              error={errors.startPractising?.message}
+              {...register('starting_pratice')}
+              error={errors.starting_pratice?.message}
             />
           </div>
-          <div className="w-full">
-            <Input
-              label="Achievements"
-              placeholder="Enter Achievements"
-              {...register('achievements')}
-              error={errors.achievements?.message}
-            />
-          </div>
+        </div>
+        <div className="w-full">
+          <Textarea
+            label="Achievements"
+            placeholder="Enter Achievements"
+            {...register('achievement')}
+            error={errors.achievement?.message}
+          />
         </div>
         <div className="flex w-full justify-end">
           <Button className="mt-3 text-xs" type="submit">
