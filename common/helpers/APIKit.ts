@@ -13,8 +13,15 @@ export const APIKit = {
         getUser: () => {
             const url = `/auth/getuser`;
             return client.get(url);
-        },
+        }
     },
+    doctor: {
+        getDoctorName: () => {
+            const url = `/doctorName`;
+            return client.get(url);
+        }
+    },
+
     tour: {
         getTourDataById: (propertyId: string) => {
             const url = `/tourapplication?propertyId=${propertyId}`;
