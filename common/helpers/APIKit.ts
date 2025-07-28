@@ -19,6 +19,10 @@ export const APIKit = {
         getDoctorName: () => {
             const url = `/doctorName`;
             return client.get(url);
+        },
+        getDoctor: () => {
+            const url = `/doctors`;
+            return client.get(url);
         }
     },
 
