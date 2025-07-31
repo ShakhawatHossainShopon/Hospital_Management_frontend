@@ -12,8 +12,8 @@ import { Label } from './label';
 
 interface ReusableSelectProps {
   options: { value: string; label: string }[];
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
   placeholder?: string;
   className?: string;
   label: string;

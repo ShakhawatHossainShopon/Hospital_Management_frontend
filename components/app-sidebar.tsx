@@ -80,23 +80,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ],
       },
     ],
-    projects: [
-      {
-        name: 'Design Engineering',
-        url: '#',
-        icon: Frame,
-      },
-      {
-        name: 'Sales & Marketing',
-        url: '#',
-        icon: PieChart,
-      },
-      {
-        name: 'Travel',
-        url: '#',
-        icon: Map,
-      },
-    ],
   };
 
   return (
@@ -105,8 +88,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        {isLoading ? <h5>loding</h5> : <NavMain items={data.navMain} />}
-        <NavProjects projects={data.projects} />
+        <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

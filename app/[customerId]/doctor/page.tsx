@@ -7,6 +7,7 @@ import { Doctor } from '@/types/doctor.types';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
+import { DoctorTableSkeleton } from '@/components/skeletons/DoctorTableSkeleton';
 
 const Page = () => {
   const router = useRouter();
@@ -22,9 +23,7 @@ const Page = () => {
       return res.data?.doctors;
     },
   });
-  if (isLoading) {
-    return <h1>loading..</h1>;
-  }
+
   const id = params.customerId;
 
   return (
@@ -40,7 +39,7 @@ const Page = () => {
           <Plus /> Add New Doctor
         </Button>
       </div>
-      <TableDemo refetch={refetch} doctors={doctors} />
+      {isLoading ? <DoctorTableSkeleton /> : <TableDemo doctors={doctors} refetch={refetch} />}
     </div>
   );
 };

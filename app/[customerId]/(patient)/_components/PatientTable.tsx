@@ -1,4 +1,5 @@
 import { APIKit } from '@/common/helpers/APIKit';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,16 +15,41 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Doctor } from '@/types/doctor.types';
 import Link from 'next/link';
-import { toast } from 'react-toastify';
 import { useParams } from 'next/navigation';
+import { toast } from 'react-toastify';
+interface Ipatients {
+  id: number;
+  firstname: string;
+  lastname: string;
+  age: number;
+  gender: string;
+  birth_date: string;
+  blood_groupe: string;
+  height: string;
+  weight: string;
+  mobile_phone: string;
+  guardian_name: string;
+  address_line: string;
+  area: string;
+  city: string;
+  postal_code: string;
+  created_at: string;
+  updated_at: string;
+  user_id: number;
+}
+interface PatientTableProps {
+  patients: Ipatients[];
 
-export function TableDemo({ doctors, refetch }: { doctors?: Doctor[]; refetch: () => void }) {
+  refetch: () => void;
+}
+export function PatientTable({ patients, refetch }: PatientTableProps) {
+  console.log(patients);
+
   const params = useParams();
-  const deleteUser = (id: number) => {
-    APIKit.doctor
-      .deleteDoctor(id)
+  const deletePatient = (id: number) => {
+    APIKit.patient
+      .deletePatient(id)
       .then(() => {
         toast.success('Doctor Deleted successfully');
         refetch();
@@ -35,47 +61,43 @@ export function TableDemo({ doctors, refetch }: { doctors?: Doctor[]; refetch: (
 
   return (
     <Table>
-      <TableCaption className="text-xs">A list of your recent Doctors.</TableCaption>
+      <TableCaption className="text-xs">A list of your recent Patients.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
-          <TableHead>BMDC Code</TableHead>
-          <TableHead>Doctors ID</TableHead>
-          <TableHead>Phone</TableHead>
-          <TableHead>Degree</TableHead>
-          <TableHead>Specialities</TableHead>
-          <TableHead>Designation</TableHead>
-          <TableHead>Organization</TableHead>
-          <TableHead>Consultancy Fee</TableHead>
+          <TableHead>Patient Id</TableHead>
+          <TableHead>Blood Groupe</TableHead>
+          <TableHead>Gender</TableHead>
+          <TableHead>Mobile Phone</TableHead>
+          <TableHead>Age</TableHead>
+          <TableHead>First Visit</TableHead>
+          <TableHead>Bills</TableHead>
           <TableHead>Apoinments</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {doctors && doctors.length > 0 ? (
-          doctors?.map((invoice) => (
-            <TableRow key={invoice?.id}>
+        {patients && patients.length > 0 ? (
+          patients?.map((patient) => (
+            <TableRow key={patient?.id}>
               <TableCell className="text-blue-600 text-[12px] font-medium">
                 <Link
                   className="hover:underline"
-                  href={`/${params.customerId}/doctor/doctorProfile/${invoice.id}`}
+                  href={`/${params.customerId}/doctor/doctorProfile/${patient.id}`}
                 >
-                  {`${invoice.firstname} ${invoice.lastname}`}
+                  {`${patient.firstname} ${patient.lastname}`}
                 </Link>
               </TableCell>
-              <TableCell>{invoice?.bmdc_code}</TableCell>
-              <TableCell>{invoice?.id}</TableCell>
-              <TableCell>{invoice?.mobile}</TableCell>
-              <TableCell>{invoice?.degree_name}</TableCell>
-              <TableCell>{invoice?.speciality}</TableCell>
-              <TableCell>{invoice?.job_designation}</TableCell>
-              <TableCell>{invoice?.working_place}</TableCell>
-              <TableCell>{invoice?.consultancy_fee} BDT</TableCell>
-              <TableCell className="text-center">
-                <button className="cursor-pointer py-1 bg-blue-600 text-white px-4 rounded-2xl">
-                  Book
-                </button>
+              <TableCell>{patient?.id}</TableCell>
+              <TableCell>{patient?.blood_groupe}</TableCell>
+              <TableCell>{patient?.gender}</TableCell>
+              <TableCell>{patient?.mobile_phone}</TableCell>
+              <TableCell>{patient?.age}</TableCell>
+              <TableCell>
+                {patient?.created_at ? new Date(patient.created_at).toUTCString() : ''}
               </TableCell>
+              <TableCell>N/A</TableCell>
+              <TableCell>N/A</TableCell>
               <TableCell className="max-w-[100px]">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -88,7 +110,7 @@ export function TableDemo({ doctors, refetch }: { doctors?: Doctor[]; refetch: (
                       Update Doctor
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      onClick={() => deleteUser(invoice?.id)}
+                      onClick={() => deletePatient(patient?.id)}
                       className="text-xs font-bold text-red-500"
                     >
                       Delete Doctor

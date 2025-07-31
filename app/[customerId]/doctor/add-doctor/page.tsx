@@ -40,7 +40,7 @@ const Page = () => {
   const { customerId } = useParams();
   const [loading, setLoading] = useState(false);
   type FormData = z.infer<typeof formSchema>;
-
+  console.log(loading);
   const {
     register,
     handleSubmit,
@@ -78,7 +78,7 @@ const Page = () => {
       <div className="pb-4 flex w-full justify-between items-center">
         <h4>Add New Doctor</h4>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 p-4 bg-white rounded-lg">
         <div className="md:flex gap-6 w-full">
           <div className="w-full">
             <Controller
