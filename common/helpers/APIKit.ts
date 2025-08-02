@@ -79,6 +79,10 @@ export const APIKit = {
             const url = `/appoinment/create`;
             return client.post(url, payload);
         },
+        SaveAppoinment: (payload: any) => {
+            const url = `/appoinment/save`;
+            return client.post(url, payload);
+        },
     }
     ,
     tour: {

@@ -223,8 +223,13 @@ export function SceduleSlotTable() {
                 <TableCell className="text-blue-600 text-[12px] font-medium">
                   {formatTo12Hour(slots.time.slice(0, -3))}
                 </TableCell>
-                <TableCell className="min-w-[100px] text-orange-600 cursor-pointer underline">
-                  {slots?.name}
+                <TableCell className="min-w-[100px] text-blue-600 font-medium">
+                  {slots?.name}{' '}
+                  {slots?.type == 'new' ? (
+                    <span className=" text-red-800 font-[6px] cursor-pointer font-light">
+                      (signup)
+                    </span>
+                  ) : null}
                 </TableCell>
                 <TableCell>{slots?.phone}</TableCell>
                 <TableCell
