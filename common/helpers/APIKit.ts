@@ -13,8 +13,74 @@ export const APIKit = {
         getUser: () => {
             const url = `/auth/getuser`;
             return client.get(url);
+        }
+    },
+    doctor: {
+        getDoctorName: () => {
+            const url = `/doctorName`;
+            return client.get(url);
+        },
+        getDoctor: () => {
+            const url = `/doctors`;
+            return client.get(url);
+        },
+        getSingleDoctor: (id: any) => {
+            const url = `/doctors/${id}`;
+            return client.get(url);
+        },
+        addDoctor: (payload: any) => {
+            const url = `/doctors`;
+            return client.post(url, payload);
+        },
+        deleteDoctor: (id: any) => {
+            const url = `/doctors/${id}`;
+            return client.delete(url);
+        }
+    },
+    patient: {
+        addPatient: (payload: any) => {
+            const url = `/patients`;
+            return client.post(url, payload);
+        },
+        getPatient: () => {
+            const url = `/patients`;
+            return client.get(url);
+        },
+        deletePatient: (id: any) => {
+            const url = `/scedule/slot/${id}`;
+            return client.delete(url);
+        },
+        getPatientByPhone: (id: any) => {
+            const url = `/patients/search/${id}`;
+            return client.get(url);
+        },
+    }
+    ,
+    Scedule: {
+        addScedule: (payload: any) => {
+            const url = `/scedule/store`;
+            return client.post(url, payload);
+        },
+        AllScedule: (doctorId: any, day: any) => {
+            const url = `/scedule/slots/doctorId/${doctorId}/day/${day}`;
+            return client.get(url);
+        },
+        GetAllScedule: (id: any) => {
+            const url = `/scedule/doctor/${id}`;
+            return client.get(url);
+        },
+        deleteScedule: (id: any) => {
+            const url = `/scedule/delete/${id}`;
+            return client.delete(url);
         },
     },
+    appoinment: {
+        AddAppoinment: (payload: any) => {
+            const url = `/appoinment/create`;
+            return client.post(url, payload);
+        },
+    }
+    ,
     tour: {
         getTourDataById: (propertyId: string) => {
             const url = `/tourapplication?propertyId=${propertyId}`;

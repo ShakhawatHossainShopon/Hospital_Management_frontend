@@ -1,143 +1,104 @@
 'use client';
 
 import * as React from 'react';
-import {
-  BookOpen,
-  Bot,
-  Frame,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-  Hospital,
-} from 'lucide-react';
-
+import { Hospital } from 'lucide-react';
 import { NavMain } from '@/components/nav-main';
-import { NavProjects } from '@/components/nav-projects';
 import { TeamSwitcher } from '@/components/team-switcher';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
-
-// This is sample data.
-const data = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
-  teams: [
-    {
-      name: 'My Hospital',
-      logo: Hospital,
-      plan: 'Enterprise',
-    },
-  ],
-  navMain: [
-    {
-      title: 'Playground',
-      url: '#',
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: 'History',
-          url: '#',
-        },
-        {
-          title: 'Starred',
-          url: '#',
-        },
-        {
-          title: 'Settings',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Models',
-      url: '#',
-      icon: Bot,
-      items: [
-        {
-          title: 'Genesis',
-          url: '#',
-        },
-        {
-          title: 'Explorer',
-          url: '#',
-        },
-        {
-          title: 'Quantum',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpen,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#',
-        },
-        {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Settings',
-      url: '#',
-      icon: Settings2,
-      items: [
-        {
-          title: 'General',
-          url: '#',
-        },
-        {
-          title: 'Team',
-          url: '#',
-        },
-        {
-          title: 'Billing',
-          url: '#',
-        },
-        {
-          title: 'Limits',
-          url: '#',
-        },
-      ],
-    },
-  ],
-  projects: [
-    {
-      name: 'Design Engineering',
-      url: '#',
-      icon: Frame,
-    },
-    {
-      name: 'Sales & Marketing',
-      url: '#',
-      icon: PieChart,
-    },
-    {
-      name: 'Travel',
-      url: '#',
-      icon: Map,
-    },
-  ],
-};
-
+import { FaHospitalUser } from 'react-icons/fa6';
+import { IoPeople } from 'react-icons/io5';
+import { APIKit } from '@/common/helpers/APIKit';
+import { useQuery } from '@tanstack/react-query';
+import { FaUserMd } from 'react-icons/fa';
+import { FaList } from 'react-icons/fa';
+import { FaUserTie } from 'react-icons/fa';
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: usernname, isLoading } = useQuery({
+    queryKey: ['getUser-name-34'],
+    queryFn: async () => {
+      const res = await APIKit.doctor.getDoctorName();
+      return {
+        data: res.data,
+        status: res.status,
+      };
+    },
+  });
+
+  const navArray = [];
+  navArray.push(
+    {
+      title: 'Manage',
+      url: `/${usernname?.data?.doctorId}/appoinments`,
+    },
+    {
+      title: 'Statements',
+      url: `/${usernname?.data?.doctorId}/appoinments`,
+    }
+  );
+  usernname?.data?.doctors?.map((user: { name: string; id: number }) => {
+    navArray.push({
+      title: `${user?.name}`,
+      url: `/${usernname?.data?.doctorId}/doctor/${user?.id}`,
+      icon: FaUserTie,
+    });
+  });
+
+  const data = {
+    user: {
+      name: 'john doe',
+      email: 'm@example.com',
+      avatar: '/avatars/shadcn.jpg',
+    },
+    teams: [
+      {
+        name: 'My Hospital',
+        logo: Hospital,
+        plan: 'Enterprise',
+      },
+    ],
+    navMain: [
+      {
+        title: 'Doctors',
+        url: '#',
+        icon: FaHospitalUser,
+        isActive: true,
+        items: [
+          {
+            title: 'Manage',
+            url: `/${usernname?.data?.doctorId}/doctor`,
+          },
+          {
+            title: 'Statements',
+            url: `/${usernname?.data?.doctorId}/doctor/statements`,
+          },
+        ],
+      },
+      {
+        title: 'Appoinments',
+        url: '#',
+        icon: FaList,
+        isActive: true,
+        items: navArray,
+      },
+      {
+        title: 'Patients',
+        url: '#',
+        icon: IoPeople,
+        isActive: true,
+        items: [
+          {
+            title: 'Add Patient',
+            url: `/${usernname?.data?.doctorId}/add-patient`,
+          },
+          {
+            title: 'All Patient',
+            url: `/${usernname?.data?.doctorId}/all-patient`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -145,7 +106,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

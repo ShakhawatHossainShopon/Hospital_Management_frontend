@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Label } from './label';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   error?: string;
   required?: boolean;
 }
@@ -27,7 +27,6 @@ function Input({ label, required = false, error, className, type, ...props }: In
         )}
         {...props}
       />
-      {error && <p className="text-xs text-red-500">{error}</p>}
     </div>
   );
 }
