@@ -8,10 +8,11 @@ import { useForm } from 'react-hook-form';
 import z from 'zod';
 import PatientCard from '@/components/patientCard';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { IoIosWarning } from 'react-icons/io';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { MdEventAvailable } from 'react-icons/md';
 const formSchema = z.object({
   mobile_phone: z.string().min(1),
   gender: z.string().min(1),
@@ -22,6 +23,8 @@ const formSchema = z.object({
 });
 
 const Page = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [debouncedPhone, setDebouncedPhone] = useState<string>();
   type FormData = z.infer<typeof formSchema>;
@@ -51,16 +54,39 @@ const Page = () => {
     enabled: !!debouncedPhone,
     retry: false,
   });
+  const { id, slotId } = useParams() as { id: string; slotId: string };
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    const payload = {
+      firstname: data?.firstname,
+      lastname: data?.lastname,
+      mobile_phone: data?.mobile_phone,
+      gender: data?.gender,
+      age: data?.age,
+      note: data?.note,
+      doctor_id: id,
+      slot_id: slotId,
+    };
+
+    setLoading(true);
+    APIKit.appoinment
+      .SaveAppoinment(payload)
+      .then(() => {
+        toast.success('Appoinment added successfully');
+        router.back();
+      })
+      .catch(() => {
+        toast.error('Something went wrong!');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
-  const { id, slotId } = useParams() as { id: string; slotId: string };
 
   return (
     <div>
       <div className="pb-4 flex w-full justify-between items-center">
-        <h4 className="text-lg font-medium">Add New Appointment</h4>
+        <h4 className="text-lg font-medium">Add Appointment</h4>
       </div>
       <div className="flex w-full gap-16 bg-white p-4 rounded-lg">
         <form onSubmit={handleSubmit(onSubmit)} className="gap-6 w-full ">
@@ -129,8 +155,8 @@ const Page = () => {
               />
             </div>
           </div>
-          <Button disabled={data} size="sm" variant={'outline'} className="mt-6 text-xs py-1 px-4">
-            <Plus /> Save Appointment
+          <Button isLoading={loading} disabled={data} className="mt-6 text-xs" type="submit">
+            <MdEventAvailable /> Save Appointment
           </Button>
         </form>
         <div className="w-full">
