@@ -21,6 +21,7 @@ import { useParams } from 'next/navigation';
 
 export function TableDemo({ doctors, refetch }: { doctors?: Doctor[]; refetch: () => void }) {
   const params = useParams();
+  const { customerId } = params;
   const deleteUser = (id: number) => {
     APIKit.doctor
       .deleteDoctor(id)
@@ -72,9 +73,11 @@ export function TableDemo({ doctors, refetch }: { doctors?: Doctor[]; refetch: (
               <TableCell>{invoice?.working_place}</TableCell>
               <TableCell>{invoice?.consultancy_fee} BDT</TableCell>
               <TableCell className="text-center">
-                <button className="cursor-pointer py-1 bg-blue-600 text-white px-4 rounded-2xl">
-                  Book
-                </button>
+                <Link href={`/${customerId}/doctor/${invoice?.id}`}>
+                  <button className="cursor-pointer py-1 bg-blue-600 text-white px-4 rounded-2xl">
+                    Book
+                  </button>
+                </Link>
               </TableCell>
               <TableCell className="max-w-[100px]">
                 <DropdownMenu>

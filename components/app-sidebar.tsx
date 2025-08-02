@@ -1,20 +1,20 @@
 'use client';
 
 import * as React from 'react';
-import { Frame, Map, PieChart, Hospital } from 'lucide-react';
-
+import { Hospital } from 'lucide-react';
 import { NavMain } from '@/components/nav-main';
-import { NavProjects } from '@/components/nav-projects';
 import { TeamSwitcher } from '@/components/team-switcher';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
 import { FaHospitalUser } from 'react-icons/fa6';
 import { IoPeople } from 'react-icons/io5';
 import { APIKit } from '@/common/helpers/APIKit';
 import { useQuery } from '@tanstack/react-query';
-import Cookies from 'js-cookie';
+import { FaUserMd } from 'react-icons/fa';
+import { FaList } from 'react-icons/fa';
+import { FaUserTie } from 'react-icons/fa';
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: usernname, isLoading } = useQuery({
-    queryKey: ['getUser'],
+    queryKey: ['getUser-name-34'],
     queryFn: async () => {
       const res = await APIKit.doctor.getDoctorName();
       return {
@@ -23,22 +23,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       };
     },
   });
-  const userIdFromCookie = Cookies.get('userid');
+
   const navArray = [];
   navArray.push(
     {
       title: 'Manage',
-      url: `/${userIdFromCookie}/doctor`,
+      url: `/${usernname?.data?.doctorId}/appoinments`,
     },
     {
-      title: 'statements',
-      url: `/${userIdFromCookie}/doctor/statements`,
+      title: 'Statements',
+      url: `/${usernname?.data?.doctorId}/appoinments`,
     }
   );
   usernname?.data?.doctors?.map((user: { name: string; id: number }) => {
     navArray.push({
       title: `${user?.name}`,
-      url: `/${userIdFromCookie}/doctor/${user?.id}`,
+      url: `/${usernname?.data?.doctorId}/doctor/${user?.id}`,
+      icon: FaUserTie,
     });
   });
 
@@ -61,6 +62,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: '#',
         icon: FaHospitalUser,
         isActive: true,
+        items: [
+          {
+            title: 'Manage',
+            url: `/${usernname?.data?.doctorId}/doctor`,
+          },
+          {
+            title: 'Statements',
+            url: `/${usernname?.data?.doctorId}/doctor/statements`,
+          },
+        ],
+      },
+      {
+        title: 'Appoinments',
+        url: '#',
+        icon: FaList,
+        isActive: true,
         items: navArray,
       },
       {
@@ -71,11 +88,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'Add Patient',
-            url: `/${userIdFromCookie}/add-patient`,
+            url: `/${usernname?.data?.doctorId}/add-patient`,
           },
           {
             title: 'All Patient',
-            url: `/${userIdFromCookie}/all-patient`,
+            url: `/${usernname?.data?.doctorId}/all-patient`,
           },
         ],
       },

@@ -103,22 +103,12 @@ export function SceduleTable() {
                 <TableCell>{new Date(schedule?.created_at).toLocaleString()}</TableCell>
 
                 <TableCell className="max-w-[100px]">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <button className="cursor-pointer flex items-center gap-2 px-4 py-1.5 border-[2px] border-cyan-500 text-cyan-500 rounded-md hover:bg-cyan-50 transition">
-                        Actions
-                        <ChevronDown className="w-4 h-4" />
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="text-xs" align="end">
-                      <DropdownMenuItem
-                        onClick={() => deleteSlots(schedule?.id)}
-                        className="text-xs text-red-700"
-                      >
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <button
+                    onClick={() => deleteSlots(schedule?.id)}
+                    className="text-xs text-red-700 cursor-pointer hover:underline"
+                  >
+                    Delete
+                  </button>
                 </TableCell>
               </TableRow>
             ))

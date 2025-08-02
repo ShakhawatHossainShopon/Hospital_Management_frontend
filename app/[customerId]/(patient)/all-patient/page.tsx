@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import React from 'react';
+import { UserPlus } from 'lucide-react';
 import { PatientTable } from '../_components/PatientTable';
 import { useParams, useRouter } from 'next/navigation';
 import { PatientTableSkeleton } from '@/components/skeletons/PatientTableSkeleton';
@@ -24,16 +25,16 @@ const Page = () => {
   });
 
   return (
-    <div>
-      <div className="pb-4 flex w-full justify-between items-center">
-        <h4 className="text-sm">All Patients</h4>
+    <div className="p-4 bg-white rounded-lg">
+      <div className="p-4 flex w-full bg-gray-100 rounded-lg mb-4 justify-between items-center">
+        <h4 className="font-medium">All Patients</h4>
         <Button
           size="sm"
           onClick={() => router.push(`/${customerId}/add-patient`)}
           variant={'outline'}
-          className="text-xs py-1 px-4"
+          className="text-xs py-1 px-4 border-indigo-600 text-indigo-600"
         >
-          <Plus /> Add New Patient
+          <UserPlus /> Add Patient
         </Button>
       </div>
       {isLoading ? (

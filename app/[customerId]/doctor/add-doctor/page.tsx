@@ -10,7 +10,8 @@ import { useState } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { APIKit } from '@/common/helpers/APIKit';
 import { toast } from 'react-toastify';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 
 // 1. Define Zod schema with error messages
 const formSchema = z.object({
@@ -25,7 +26,7 @@ const formSchema = z.object({
   email: z.email().min(1, { message: 'email is required' }),
   password: z.string().min(1, { message: 'password is required' }),
   working_place: z.string(),
-  available_days: z.string(),
+  available_days: z.string().min(1, { message: 'available_time is required' }),
   job_designation: z.string(),
   degree_name: z.string(),
   provide_service: z.string(),
@@ -36,8 +37,8 @@ const formSchema = z.object({
 });
 
 const Page = () => {
+  const queryClient = useQueryClient();
   const router = useRouter();
-  const { customerId } = useParams();
   const [loading, setLoading] = useState(false);
   type FormData = z.infer<typeof formSchema>;
   console.log(loading);
@@ -57,17 +58,21 @@ const Page = () => {
   ];
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
-
     setLoading(true);
     APIKit.doctor
       .addDoctor(data)
       .then(() => {
         toast.success('Doctor added successfully');
-        router.push(`/${customerId}/doctor`);
+        queryClient.invalidateQueries({ queryKey: ['getUser-name-34'] });
+        router.back();
       })
-      .catch(() => {
-        toast.error('Something went wrong!');
+      .catch((err) => {
+        if (err?.response?.status === 422 && err?.response?.data?.errors) {
+          const messages = Object.values(err.response.data.errors).flat();
+          messages.forEach((msg) => toast.error(String(msg)));
+        } else {
+          toast.error('Something went wrong');
+        }
       })
       .finally(() => {
         setLoading(false); // ✅ End loading

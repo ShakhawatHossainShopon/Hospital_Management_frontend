@@ -25,6 +25,7 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
+      icon?: React.ElementType;
     }[];
   }[];
 }) {
@@ -52,8 +53,8 @@ export function NavMain({
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a className="text-[12px] font-medium" href={subItem.url}>
-                          <span>{subItem.title}</span>
+                        <a className="text-[12px] flex items-center font-medium" href={subItem.url}>
+                          {subItem.icon && <subItem.icon size={14} />} <span>{subItem.title}</span>
                         </a>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>

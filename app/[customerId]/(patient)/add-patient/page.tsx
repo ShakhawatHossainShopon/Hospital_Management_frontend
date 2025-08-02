@@ -30,7 +30,6 @@ const formSchema = z.object({
 
 const Page = () => {
   const [loading, setLoading] = useState(false);
-  const { customerId } = useParams();
   const router = useRouter();
   type FormData = z.infer<typeof formSchema>;
   const {
@@ -46,7 +45,7 @@ const Page = () => {
       .addPatient(data)
       .then(() => {
         toast.success('Patient added successfully');
-        router.push(`/${customerId}/all-patient`);
+        router.back();
       })
       .catch((err) => {
         if (err?.response?.status === 422 && err?.response?.data?.errors) {
@@ -63,7 +62,7 @@ const Page = () => {
   return (
     <div>
       <div className="pb-4 flex w-full justify-between items-center">
-        <h4>Add New Doctor</h4>
+        <h4 className="font-medium">Add Patient</h4>
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 p-4 bg-white rounded-lg">
         <div className="md:flex gap-6 w-full">
@@ -203,7 +202,7 @@ const Page = () => {
         </div>
         <div className="flex w-full justify-end">
           <Button className="mt-3 text-xs" type="submit">
-            <Plus /> Add New Doctor
+            Add Patient
           </Button>
         </div>
       </form>

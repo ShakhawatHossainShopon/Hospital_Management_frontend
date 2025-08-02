@@ -1,11 +1,13 @@
 import { APIKit } from '@/common/helpers/APIKit';
 import { ChevronDown } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import doctoricon from '@/public/assets/doctor-icon.png';
 import {
   Table,
   TableBody,
@@ -19,6 +21,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
+import Image from 'next/image';
 
 type ScheduleSlot = {
   appointment_id: number;
@@ -39,6 +42,17 @@ type ScheduleSlot = {
   note: string;
 };
 
+interface IScheduleProps {
+  slots: ScheduleSlot[];
+  doctor: {
+    firstname: string;
+    lastname: string;
+    title: string;
+    degree_name: string;
+    speciality: string;
+  };
+}
+
 function formatTo12Hour(time: string): string {
   const [hourStr, minute] = time.split(':');
   let hour = parseInt(hourStr, 10);
@@ -57,17 +71,14 @@ export function SceduleSlotTable() {
   const params = useParams();
   const { id } = params;
 
-  const {
-    data: slots,
-    isLoading,
-    refetch,
-  } = useQuery<ScheduleSlot[]>({
+  const { data, isLoading, refetch } = useQuery<IScheduleProps>({
     queryKey: ['get-scedule-14a4', id, day],
     queryFn: async () => {
       const res = await APIKit.Scedule.AllScedule(id, day);
-      return res.data?.slots;
+      return res.data;
     },
   });
+  console.log(data);
 
   const deleteSlots = (id: number) => {
     APIKit.patient
@@ -95,14 +106,62 @@ export function SceduleSlotTable() {
 
   return (
     <div>
-      <div className="mb-4 w-full flex justify-center">
+      <div>
+        <div className="flex items-center gap-x-3 bg-gray-50 p-4 rounded-md mb-6 md:w-1/5">
+          <div className="shrink-0">
+            <Image
+              className="rounded-full object-cover"
+              src={doctoricon}
+              alt="Doctor Avatar"
+              width={40}
+              height={40}
+            />
+          </div>
+          <div className="grow">
+            <h1 className="text-sm font-medium text-gray-800 dark:text-neutral-200">
+              {data?.doctor?.title} {data?.doctor?.firstname} {data?.doctor?.lastname}
+            </h1>
+            <p className="text-xs text-gray-600 dark:text-neutral-400">
+              {data?.doctor?.degree_name}
+            </p>
+            <p className="text-xs text-gray-600 dark:text-neutral-400">
+              {data?.doctor?.speciality}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="mb-4 w-full flex justify-center items-center gap-2">
+        <button
+          onClick={() => {
+            const prevDate = new Date(selectedDate);
+            prevDate.setDate(prevDate.getDate() - 1);
+            setSelectedDate(prevDate.toISOString().split('T')[0]);
+            setDay(prevDate.getDay());
+          }}
+          className="px-2 py-2 bg-gray-300 cursor-pointer text-sm border border-gray-300 rounded  hover:bg-gray-100 transition"
+        >
+          <ArrowLeft className="w-4 h-4" />
+        </button>
+
         <input
           type="date"
           id="datePicker"
           value={selectedDate}
           onChange={handleDateChange}
-          className="appearance-none px-3 py-1.5 text-sm border border-gray-300 rounded-sm bg-white text-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+          className="appearance-none px-2 py-2 text-sm border border-gray-300 rounded-sm bg-gray-300 text-gray-800  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
         />
+
+        <button
+          onClick={() => {
+            const nextDate = new Date(selectedDate);
+            nextDate.setDate(nextDate.getDate() + 1);
+            setSelectedDate(nextDate.toISOString().split('T')[0]);
+            setDay(nextDate.getDay());
+          }}
+          className="px-2 py-2 bg-gray-300 text-sm border border-gray-300 rounded  hover:bg-gray-100 cursor-pointer transition"
+        >
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
 
       <Table>
@@ -115,7 +174,7 @@ export function SceduleSlotTable() {
             <TableHead>Phone</TableHead>
             <TableHead>Type</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>Document</TableHead>
+            <TableHead>Age</TableHead>
             <TableHead className="max-w-[150px]">Note</TableHead>
             <TableHead>Book Now</TableHead>
             <TableHead>Actions</TableHead>
@@ -157,8 +216,8 @@ export function SceduleSlotTable() {
                 </TableCell>
               </TableRow>
             ))
-          ) : slots && slots.length > 0 ? (
-            slots?.map((slots) => (
+          ) : data && data?.slots.length > 0 ? (
+            data?.slots?.map((slots) => (
               <TableRow key={slots?.id}>
                 <TableCell>{slots?.id}</TableCell>
                 <TableCell className="text-blue-600 text-[12px] font-medium">

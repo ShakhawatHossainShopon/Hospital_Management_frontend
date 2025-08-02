@@ -11,7 +11,6 @@ import {
 export function DoctorTableSkeleton() {
   return (
     <Table>
-      <TableCaption className="text-xs">A list of your recent Doctors.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
