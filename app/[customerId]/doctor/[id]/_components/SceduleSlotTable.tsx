@@ -22,6 +22,8 @@ import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { ReusableSelect } from '@/components/ui/SelectComp';
 
 type ScheduleSlot = {
   appointment_id: number;
@@ -69,7 +71,7 @@ export function SceduleSlotTable() {
   const [day, setDay] = useState(new Date().getDay());
   const router = useRouter();
   const params = useParams();
-  const { id } = params;
+  const { id, customerId } = params;
 
   const { data, isLoading, refetch } = useQuery<IScheduleProps>({
     queryKey: ['get-scedule-14a4', id, day],
@@ -78,7 +80,6 @@ export function SceduleSlotTable() {
       return res.data;
     },
   });
-  console.log(data);
 
   const deleteSlots = (id: number) => {
     APIKit.patient
@@ -103,6 +104,43 @@ export function SceduleSlotTable() {
       setDay(0);
     }
   };
+  const handleStatusChange = (id: number, newStatus: string) => {
+    const payload = {
+      id: id,
+      status: newStatus,
+    };
+    APIKit.Scedule.updateSlotStatus(payload)
+      .then(() => {
+        toast.success('Appoinment status updated successfully');
+        refetch();
+      })
+      .catch(() => {
+        toast.error('Something went wrong!');
+      });
+  };
+
+  const statusOptions = [
+    { value: 'pending', label: 'Pending' },
+    { value: 'confirm', label: 'Confirm' },
+    { value: 'visiting', label: 'Visiting' },
+    { value: 'complete', label: 'Complete' },
+  ];
+
+  function getStatusColor(status: string) {
+    switch (status) {
+      case 'pending':
+        return 'bg-amber-300 text-black';
+      case 'confirm':
+        return 'bg-green-300 text-black';
+      case 'visiting':
+        return 'bg-purple-300 text-black';
+      case 'complete':
+        return 'bg-blue-300 text-black';
+      default:
+        return 'bg-gray-200 text-black';
+    }
+  }
+  console.log(data);
 
   return (
     <div>
@@ -224,11 +262,16 @@ export function SceduleSlotTable() {
                   {formatTo12Hour(slots.time.slice(0, -3))}
                 </TableCell>
                 <TableCell className="min-w-[100px] text-blue-600 font-medium">
-                  {slots?.name}{' '}
-                  {slots?.type == 'new' ? (
-                    <span className=" text-red-800 font-[6px] cursor-pointer font-light">
-                      (signup)
-                    </span>
+                  <Link href={`/${customerId}/patientProfile/${slots?.patient_id}`}>
+                    <span>{slots?.name}</span>
+                  </Link>
+
+                  {slots?.type == 'New' ? (
+                    <Link href={`/${customerId}/patientProfile/${slots?.patient_id}`}>
+                      <span className=" text-red-800 font-[6px] cursor-pointer font-light">
+                        (signup)
+                      </span>
+                    </Link>
                   ) : null}
                 </TableCell>
                 <TableCell>{slots?.phone}</TableCell>
@@ -237,7 +280,18 @@ export function SceduleSlotTable() {
                 >
                   {slots?.type}
                 </TableCell>
-                <TableCell>{slots?.is_booked ? slots?.status : null}</TableCell>
+                <TableCell className="min-w-[120px]">
+                  {slots?.is_booked ? (
+                    <ReusableSelect
+                      label="" // you can remove or add label as needed
+                      options={statusOptions}
+                      value={slots.status}
+                      onChange={(val) => handleStatusChange(slots.id, val)}
+                      className={`rounded-md py-1 px-2 text-[13px] ${getStatusColor(slots.status)}`}
+                      placeholder="Select status"
+                    />
+                  ) : null}
+                </TableCell>
                 <TableCell>{slots?.patient_age}</TableCell>
                 <TableCell className="min-w-[80px]">{slots?.note}</TableCell>
                 <TableCell>
@@ -263,7 +317,11 @@ export function SceduleSlotTable() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="text-xs" align="end">
                       <DropdownMenuItem className="text-xs font-medium text-yellow-500">
-                        Create Appointment bill
+                        <Link
+                          href={`/${customerId}/create-appoinment-bill/${slots?.appointment_id}`}
+                        >
+                          Create Appointment bill
+                        </Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem className="text-xs font-medium text-blue-800">
                         Create Prescription bill
