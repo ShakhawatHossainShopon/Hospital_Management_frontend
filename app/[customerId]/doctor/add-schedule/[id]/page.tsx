@@ -34,7 +34,6 @@ const formSchema = z.object({
 });
 
 const Page = () => {
-  const { customerId } = useParams();
   const { id } = useParams();
   type FormData = z.output<typeof formSchema>;
   const [loading, setLoading] = useState(false);

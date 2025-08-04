@@ -23,22 +23,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       };
     },
   });
+  console.log(usernname);
 
   const navArray = [];
-  navArray.push(
-    {
-      title: 'Manage',
-      url: `/${usernname?.data?.doctorId}/appoinments`,
-    },
-    {
-      title: 'Statements',
-      url: `/${usernname?.data?.doctorId}/appoinments`,
-    }
-  );
+  navArray.push({
+    title: 'Manage',
+    url: `/${usernname?.data?.user_id}/appoinments`,
+  });
   usernname?.data?.doctors?.map((user: { name: string; id: number }) => {
     navArray.push({
       title: `${user?.name}`,
-      url: `/${usernname?.data?.doctorId}/doctor/${user?.id}`,
+      url: `/${usernname?.data?.user_id}/doctor/${user?.id}`,
       icon: FaUserTie,
     });
   });
@@ -65,11 +60,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'Manage',
-            url: `/${usernname?.data?.doctorId}/doctor`,
+            url: `/${usernname?.data?.user_id}/doctor`,
           },
           {
             title: 'Statements',
-            url: `/${usernname?.data?.doctorId}/doctor/statements`,
+            url: `/${usernname?.data?.user_id}/doctor/statements`,
           },
         ],
       },
@@ -88,11 +83,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'Add Patient',
-            url: `/${usernname?.data?.doctorId}/add-patient`,
+            url: `/${usernname?.data?.user_id}/add-patient`,
           },
           {
             title: 'All Patient',
-            url: `/${usernname?.data?.doctorId}/all-patient`,
+            url: `/${usernname?.data?.user_id}/all-patient`,
           },
         ],
       },

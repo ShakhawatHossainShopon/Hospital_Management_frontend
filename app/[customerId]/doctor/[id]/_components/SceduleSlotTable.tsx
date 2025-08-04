@@ -22,6 +22,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type ScheduleSlot = {
   appointment_id: number;
@@ -263,7 +264,7 @@ export function SceduleSlotTable() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="text-xs" align="end">
                       <DropdownMenuItem className="text-xs font-medium text-yellow-500">
-                        Create Appointment bill
+                        <Link href={'/appoinment-bill'}>Create Appointment bill</Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem className="text-xs font-medium text-blue-800">
                         Create Prescription bill

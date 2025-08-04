@@ -83,6 +83,14 @@ export const APIKit = {
             const url = `/appoinment/save`;
             return client.post(url, payload);
         },
+        GetAppoinmentById: (id: any) => {
+            const url = `/appoinment/doctor/${id}`;
+            return client.get(url);
+        },
+        GetAllAppoinment: () => {
+            const url = `/appoinment/`;
+            return client.get(url);
+        },
     }
     ,
     tour: {
