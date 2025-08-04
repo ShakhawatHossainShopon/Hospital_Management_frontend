@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 'use client';
 import { ReusableTable } from '@/components/tables/ResusableTable';
 import { ChevronDown } from 'lucide-react';
@@ -12,6 +14,8 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import { APIKit } from '@/common/helpers/APIKit';
 import { useQuery } from '@tanstack/react-query';
 import { DateOnly } from '@/components/DateOnly';
+import { ReusableSelect } from '@/components/ui/SelectComp';
+import { useState } from 'react';
 type Slot = {
   id: number;
   time: string; // e.g. "08:00:00"
@@ -79,17 +83,35 @@ export default function StatementTable() {
     'payment status',
     'Status',
   ];
-
+  const [doctor,setDoctor] = useState<string | undefined>()
   const { data: appointments, isLoading } = useQuery<PaymentRecord[]>({
     queryKey: ['get-appointment-14a4'],
     queryFn: async () => {
       const res = await APIKit.appoinment.GetAppoinmentById(1);
       return res?.data?.appointment;
     },
-  });
-  console.log(appointments);
+  })
 
+    const { data: doctorname, isLoading: isloadingDoctor } = useQuery({
+    queryKey: ['getUser-name-34',doctor],
+    queryFn: async () => {
+      const res = await APIKit.doctor.getDoctorName();
+      return {
+        data: res.data,
+        status: res.status,
+      }
+    },
+      enabled: !!doctor,
+  });
+  console.log(doctor);
+  
+  const options = doctorname?.data?.doctors?.map((value:{id:string,name:string})=> {return {value:value?.id,label:value?.name}})
   return (
+    <>
+    {isloadingDoctor ? "loading..": <div className='my-6 md:w-1/3'>
+      <ReusableSelect label='Select Doctor' onChange={(value:string)=> setDoctor(value)} options={options} />
+    </div>}
+    
     <ReusableTable
       caption="A list of your recent Slots."
       headers={headers}
@@ -121,5 +143,6 @@ export default function StatementTable() {
         </TableRow>
       )}
     />
+    </>
   );
 }
