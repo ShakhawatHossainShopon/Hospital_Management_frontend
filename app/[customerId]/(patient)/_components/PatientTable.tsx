@@ -83,7 +83,7 @@ export function PatientTable({ patients, refetch }: PatientTableProps) {
               <TableCell className="text-blue-600 text-[12px] font-medium">
                 <Link
                   className="hover:underline"
-                  href={`/${params.customerId}/doctor/doctorProfile/${patient.id}`}
+                  href={`/${params.customerId}/patientProfile/${patient.id}`}
                 >
                   {`${patient.firstname} ${patient.lastname}`}
                 </Link>

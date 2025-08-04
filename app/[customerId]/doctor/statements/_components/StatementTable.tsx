@@ -15,7 +15,7 @@ import { APIKit } from '@/common/helpers/APIKit';
 import { useQuery } from '@tanstack/react-query';
 import { DateOnly } from '@/components/DateOnly';
 import { ReusableSelect } from '@/components/ui/SelectComp';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 type Slot = {
   id: number;
   time: string; // e.g. "08:00:00"
@@ -83,66 +83,110 @@ export default function StatementTable() {
     'payment status',
     'Status',
   ];
-  const [doctor,setDoctor] = useState<string | undefined>()
-  const { data: appointments, isLoading } = useQuery<PaymentRecord[]>({
-    queryKey: ['get-appointment-14a4'],
-    queryFn: async () => {
-      const res = await APIKit.appoinment.GetAppoinmentById(1);
-      return res?.data?.appointment;
-    },
-  })
-
-    const { data: doctorname, isLoading: isloadingDoctor } = useQuery({
-    queryKey: ['getUser-name-34',doctor],
+  const { data: doctorname, isLoading: isloadingDoctor } = useQuery({
+    queryKey: ['getUser-name-34'],
     queryFn: async () => {
       const res = await APIKit.doctor.getDoctorName();
       return {
         data: res.data,
         status: res.status,
-      }
+      };
     },
-      enabled: !!doctor,
   });
-  console.log(doctor);
-  
-  const options = doctorname?.data?.doctors?.map((value:{id:string,name:string})=> {return {value:value?.id,label:value?.name}})
+  const options = doctorname?.data?.doctors?.map((value: { id: string; name: string }) => {
+    return { value: value?.id, label: value?.name };
+  });
+  const [doctor, setDoctor] = useState<string | undefined>();
+  const { data: appointments, isLoading } = useQuery<PaymentRecord[]>({
+    queryKey: ['get-appointment-14a4', doctor],
+    queryFn: async () => {
+      const res = await APIKit.appoinment.GetAppoinmentById(doctor);
+      return res?.data?.appointment;
+    },
+  });
+
+  useEffect(() => {
+    if (!doctor && doctorname?.data?.doctors?.length > 0) {
+      setDoctor(doctorname?.data?.doctors[0]?.id);
+    }
+  }, [doctorname, doctor]);
   return (
     <>
-    {isloadingDoctor ? "loading..": <div className='my-6 md:w-1/3'>
-      <ReusableSelect label='Select Doctor' onChange={(value:string)=> setDoctor(value)} options={options} />
-    </div>}
-    
-    <ReusableTable
-      caption="A list of your recent Slots."
-      headers={headers}
-      data={appointments}
-      isLoading={isLoading}
-      renderRow={(appoinemnts, i) => (
-        <TableRow key={appoinemnts.id}>
-          <TableCell>
-            <DateOnly isoDate={appoinemnts?.created_at} />
-          </TableCell>
-          <TableCell className="text-blue-600 text-[12px] font-medium">
-            <DateOnly isoDate={appoinemnts?.created_at} />
-          </TableCell>
-          <TableCell className="min-w-[100px] text-blue-600 font-medium">
-            {' '}
-            {appoinemnts?.patient?.firstname} {appoinemnts?.patient?.lastname}
-          </TableCell>
-          <TableCell>{appoinemnts?.slot[0]?.type}</TableCell>
-          <TableCell>{appoinemnts?.slot[0]?.note}</TableCell>
-          <TableCell>{appoinemnts?.amount ? appoinemnts?.amount : 'not paid'}</TableCell>
-          <TableCell>{appoinemnts?.payment_status ? 'paid' : 'not paid'}</TableCell>
-          <TableCell className="min-w-[80px]">
-            {appoinemnts?.slot[0]?.status === 'pending' ? (
-              <span className="bg-amber-300 px-2 py-1 rounded-md font-medium">pending</span>
-            ) : (
-              ''
-            )}
-          </TableCell>
-        </TableRow>
+      {isloadingDoctor && isloadingDoctor ? (
+        'loading..'
+      ) : (
+        <div className="my-6 md:w-1/3">
+          <ReusableSelect
+            label="Select Doctor"
+            onChange={(value: string) => setDoctor(value)}
+            options={options}
+          />
+        </div>
       )}
-    />
+
+      <ReusableTable
+        caption="A list of your recent Slots."
+        headers={headers}
+        data={appointments}
+        isLoading={isLoading}
+        renderRow={(appoinemnts, i) => (
+          <TableRow key={appoinemnts.id}>
+            <TableCell>
+              <DateOnly isoDate={appoinemnts?.created_at} />
+            </TableCell>
+            <TableCell className="text-blue-600 text-[12px] font-medium">
+              <DateOnly isoDate={appoinemnts?.created_at} />
+            </TableCell>
+            <TableCell className="min-w-[100px] text-blue-600 font-medium">
+              {appoinemnts?.patient?.firstname} {appoinemnts?.patient?.lastname}
+            </TableCell>
+            <TableCell>{appoinemnts?.slot[0]?.type}</TableCell>
+            <TableCell>{appoinemnts?.slot[0]?.note}</TableCell>
+            <TableCell>
+              {appoinemnts?.amount ? (
+                <span>{appoinemnts?.amount} BDT</span>
+              ) : (
+                <span className="text-red-800 py-1 px-2 rounded-lg">Not Paid</span>
+              )}
+            </TableCell>
+            <TableCell>
+              {appoinemnts?.payment_status ? (
+                <span className="bg-green-400 py-1 px-2 rounded-lg">Paid</span>
+              ) : (
+                <span className="text-red-800 text-xs font-medium py-1 px-2 rounded-lg">
+                  Not Paid
+                </span>
+              )}
+            </TableCell>
+            <TableCell className="min-w-[80px]">
+              {(() => {
+                switch (appoinemnts?.slot[0]?.status) {
+                  case 'pending':
+                    return (
+                      <span className="bg-amber-300 px-2 py-1 rounded-md font-medium">pending</span>
+                    );
+                  case 'confirm':
+                    return (
+                      <span className="bg-green-300 px-2 py-1 rounded-md font-medium">confirm</span>
+                    );
+                  case 'complete':
+                    return (
+                      <span className="bg-blue-300 px-2 py-1 rounded-md font-medium">complete</span>
+                    );
+                  case 'visiting':
+                    return (
+                      <span className="bg-purple-300 px-2 py-1 rounded-md font-medium">
+                        visiting
+                      </span>
+                    );
+                  default:
+                    return null;
+                }
+              })()}
+            </TableCell>
+          </TableRow>
+        )}
+      />
     </>
   );
 }

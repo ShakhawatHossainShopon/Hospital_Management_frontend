@@ -54,6 +54,14 @@ export const APIKit = {
             const url = `/patients/search/${id}`;
             return client.get(url);
         },
+        getPatientById: (id: any) => {
+            const url = `/patients/${id}`;
+            return client.get(url);
+        },
+        updatePatient: (payload: any, id: any) => {
+            const url = `/patients/${id}`;
+            return client.patch(url, payload);
+        },
     }
     ,
     Scedule: {
@@ -73,6 +81,10 @@ export const APIKit = {
             const url = `/scedule/delete/${id}`;
             return client.delete(url);
         },
+        updateSlotStatus: (payload: any) => {
+            const url = `/scedule/slot/status`;
+            return client.patch(url, payload);
+        },
     },
     appoinment: {
         AddAppoinment: (payload: any) => {
@@ -90,6 +102,14 @@ export const APIKit = {
         GetAllAppoinment: () => {
             const url = `/appoinment/`;
             return client.get(url);
+        },
+        GetSingleAppoinment: (id: any) => {
+            const url = `/appoinment/${id}`;
+            return client.get(url);
+        },
+        payAppoinment: (payload: any) => {
+            const url = `/appoinment/payAppoinment`;
+            return client.patch(url, payload);
         },
     }
     ,
