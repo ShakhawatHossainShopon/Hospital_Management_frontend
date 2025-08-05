@@ -47,7 +47,7 @@ export const APIKit = {
             return client.get(url);
         },
         deletePatient: (id: any) => {
-            const url = `/scedule/slot/${id}`;
+            const url = `/patients/${id}`;
             return client.delete(url);
         },
         getPatientByPhone: (id: any) => {

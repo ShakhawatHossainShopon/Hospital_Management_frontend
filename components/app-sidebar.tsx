@@ -23,13 +23,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       };
     },
   });
-  console.log(usernname);
 
   const navArray = [];
-  navArray.push({
-    title: 'Manage',
-    url: `/${usernname?.data?.user_id}/appoinments`,
-  });
+  navArray.push(
+    {
+      title: 'Book New',
+      url: `/${usernname?.data?.user_id}/book-new`,
+    },
+    {
+      title: 'Manage',
+      url: `/${usernname?.data?.user_id}/appoinments`,
+    },
+    {
+      title: 'Follow Ups',
+      url: `/${usernname?.data?.user_id}/follow-ups`,
+    }
+  );
   usernname?.data?.doctors?.map((user: { name: string; id: number }) => {
     navArray.push({
       title: `${user?.name}`,
