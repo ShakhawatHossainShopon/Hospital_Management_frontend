@@ -131,10 +131,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         isActive: true,
         items: [
           {
-            title: 'Add Diagnostic test',
-            url: `/${usernname?.data?.user_id}/add-test`,
-          },
-          {
             title: 'All Diagnostic test',
             url: `/${usernname?.data?.user_id}/all-test`,
           },
@@ -249,13 +245,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ],
       },
       {
-        title: 'Branch',
+        title: 'Admin',
         url: '#',
         icon: FaUserShield,
         isActive: true,
         items: [
           {
-            title: 'All Branches',
+            title: 'Admin',
             url: `/${usernname?.data?.user_id}/all-referance`,
           },
         ],

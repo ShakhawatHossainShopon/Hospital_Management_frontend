@@ -113,6 +113,28 @@ export const APIKit = {
         },
     }
     ,
+    Test: {
+        AddGroupe: (payload: any) => {
+            const url = `/groupe`;
+            return client.post(url, payload);
+        },
+        getGroupe: () => {
+            const url = `/groupe`;
+            return client.get(url);
+        },
+        AddTest: (data: any) => {
+            const url = `/test`;
+            return client.post(url, data);
+        },
+        getTests: () => {
+            const url = `/test`;
+            return client.get(url);
+        },
+        DeleteTest: (id: any) => {
+            const url = `/test/${id}`;
+            return client.delete(url);
+        },
+    },
     tour: {
         getTourDataById: (propertyId: string) => {
             const url = `/tourapplication?propertyId=${propertyId}`;
