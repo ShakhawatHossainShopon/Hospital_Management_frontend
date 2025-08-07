@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { APIKit } from '@/common/helpers/APIKit';
 import { ChevronDown } from 'lucide-react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
@@ -76,8 +77,16 @@ export function SceduleSlotTable() {
   const { data, isLoading, refetch } = useQuery<IScheduleProps>({
     queryKey: ['get-scedule-14a4', id, day],
     queryFn: async () => {
-      const res = await APIKit.Scedule.AllScedule(id, day);
-      return res.data;
+      try {
+        const res = await APIKit.Scedule.AllScedule(id, day);
+        return res.data;
+      } catch (err: any) {
+        if (err?.response?.status === 404) {
+          return {
+            slots: [],
+          };
+        }
+      }
     },
   });
 

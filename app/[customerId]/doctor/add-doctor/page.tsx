@@ -223,7 +223,7 @@ const Page = () => {
         <div className="md:flex gap-6 w-full">
           <div className="w-full">
             <Input
-              label="About The Specialist"
+              label="About"
               placeholder="Enter Description"
               {...register('about')}
               error={errors.about?.message}

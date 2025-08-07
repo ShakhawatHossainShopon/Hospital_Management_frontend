@@ -3,13 +3,12 @@ import { Input } from '@/components/ui/input';
 import React, { useState } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
 import z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { APIKit } from '@/common/helpers/APIKit';
 import { toast } from 'react-toastify';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   firstname: z.string().min(1, { message: 'firstname is required' }),

@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 'use client';
+import { APIKit } from '@/common/helpers/APIKit';
+import { DateOnly } from '@/components/DateOnly';
 import { ReusableTable } from '@/components/tables/ResusableTable';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { APIKit } from '@/common/helpers/APIKit';
 import { useQuery } from '@tanstack/react-query';
-import { DateOnly } from '@/components/DateOnly';
-import { ReusableSelect } from '@/components/ui/SelectComp';
-import { useEffect, useState } from 'react';
+import React from 'react';
 type Slot = {
   id: number;
   time: string; // e.g. "08:00:00"
@@ -63,8 +60,7 @@ export type PaymentRecord = {
   patient: Patient;
   slot: Slot[];
 };
-
-export default function StatementTable() {
+const AppoinmentTable = () => {
   const headers = [
     'Appt Date',
     'Appt Time',
@@ -75,49 +71,22 @@ export default function StatementTable() {
     'payment status',
     'Status',
   ];
-  const { data: doctorname, isLoading: isloadingDoctor } = useQuery({
-    queryKey: ['getUser-name-34'],
-    queryFn: async () => {
-      const res = await APIKit.doctor.getDoctorName();
-      return {
-        data: res.data,
-        status: res.status,
-      };
-    },
-  });
-  const options = doctorname?.data?.doctors?.map((value: { id: string; name: string }) => {
-    return { value: value?.id, label: value?.name };
-  });
-  const [doctor, setDoctor] = useState<string | undefined>();
   const { data: appointments, isLoading } = useQuery<PaymentRecord[]>({
-    queryKey: ['get-appointment-14a4', doctor],
+    queryKey: ['get-Allappointment-14a54'],
     queryFn: async () => {
-      const res = await APIKit.appoinment.GetAppoinmentById(doctor);
+      const res = await APIKit.appoinment.GetAllAppoinment();
       return res?.data?.appointment;
     },
   });
+  if (isLoading) {
+    return <h1>Loading</h1>;
+  }
+  console.log(appointments);
 
-  useEffect(() => {
-    if (!doctor && doctorname?.data?.doctors?.length > 0) {
-      setDoctor(doctorname?.data?.doctors[0]?.id);
-    }
-  }, [doctorname, doctor]);
   return (
-    <>
-      {isloadingDoctor && isloadingDoctor ? (
-        'loading..'
-      ) : (
-        <div className="my-6 md:w-1/3">
-          <ReusableSelect
-            label="Select Doctor"
-            onChange={(value: string) => setDoctor(value)}
-            options={options}
-          />
-        </div>
-      )}
-
+    <div>
       <ReusableTable
-        caption="A list of your recent Slots."
+        caption="A list of your All Appoinments"
         headers={headers}
         data={appointments}
         isLoading={isLoading}
@@ -179,6 +148,8 @@ export default function StatementTable() {
           </TableRow>
         )}
       />
-    </>
+    </div>
   );
-}
+};
+
+export default AppoinmentTable;

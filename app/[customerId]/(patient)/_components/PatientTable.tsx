@@ -106,14 +106,14 @@ export function PatientTable({ patients, refetch }: PatientTableProps) {
                     </button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="text-xs" align="end">
-                    <DropdownMenuItem className="text-xs font-bold text-yellow-500">
+                    {/* <DropdownMenuItem className="text-xs font-bold text-yellow-500">
                       Update Doctor
-                    </DropdownMenuItem>
+                    </DropdownMenuItem> */}
                     <DropdownMenuItem
                       onClick={() => deletePatient(patient?.id)}
                       className="text-xs font-bold text-red-500"
                     >
-                      Delete Doctor
+                      Delete Patient
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
