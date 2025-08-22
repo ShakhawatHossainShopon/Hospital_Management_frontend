@@ -16,7 +16,7 @@ interface ReusableSelectProps {
   onChange?: (value: string) => void;
   placeholder?: string;
   className?: string;
-  label: string;
+  label?: string;
   required?: boolean;
   error?: string;
 }
@@ -35,7 +35,7 @@ export function ReusableSelect({
   return (
     <>
       <Label required={required}>{label}</Label>
-      <Select onValueChange={onChange} value={value} defaultValue="" {...props}>
+      <Select onValueChange={onChange} value={value || undefined} {...props}>
         <SelectTrigger className={`${className} ${error ? 'border-2 border-red-600' : ''}`}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>

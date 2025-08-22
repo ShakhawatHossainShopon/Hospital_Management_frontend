@@ -135,26 +135,54 @@ export const APIKit = {
             return client.delete(url);
         },
     },
-    tour: {
-        getTourDataById: (propertyId: string) => {
-            const url = `/tourapplication?propertyId=${propertyId}`;
+    services: {
+        AddServices: (payload: any) => {
+            const url = `/services`;
+            return client.post(url, payload);
+        },
+        AllServices: () => {
+            const url = `/services`;
             return client.get(url);
         },
-        updateTourStatus: (id: string, payload: any) => {
-            const url = `/tourapplication/update/${id}`;
-            return client.patch(url, payload);
-        },
-        getTourUserId: (id: string) => {
-            const url = `/tourapplication?userId=${id}`;
-            return client.get(url);
-        },
-        deleteTour: (id: string) => {
-            const url = `/tourapplication/delete/${id}`;
+        deleteService: (id: any) => {
+            const url = `/services/${id}`;
             return client.delete(url);
         },
-        getMpropertyTourDataById: (apartmentId: string) => {
-            const url = `/tourapplication?apartmentId=${apartmentId}`;
-            return client.get(url);
-        }
     },
+    references: {
+        AddReferences: (payload: any) => {
+            const url = `/references`;
+            return client.post(url, payload);
+        },
+        AllReferences: (page = 1) => {
+            const url = `/references?page=${page}`;
+            return client.get(url);
+        },
+        deleteReferences: (id: any) => {
+            const url = `/references/${id}`;
+            return client.delete(url);
+        },
+    },
+    billing: {
+        getBillData: (patientId: any) => {
+            const url = `/bills/billData/${patientId}`;
+            return client.get(url);
+        },
+        createBill: (payload: any) => {
+            const url = `/bills`;
+            return client.post(url, payload);
+        },
+        AllBill: (phone: any, startDate: any, endDate: any, filterDay: any, page: any) => {
+            const url = `/bills?page=${page}&mobile_phone=${phone}&from=${startDate}&to=${endDate}&filter=${filterDay}`;
+            return client.get(url);
+        },
+        AllDues: (page: any, phone: any) => {
+            const url = `/bills/duebills?mobile_phone=${phone}&page=${page}`;
+            return client.get(url);
+        },
+        Reports: (page: any, phone: any) => {
+            const url = `/bills/reports?page=${page}&mobile_phone=${phone}`;
+            return client.get(url);
+        },
+    }
 };

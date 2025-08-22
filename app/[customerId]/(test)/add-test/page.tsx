@@ -13,6 +13,7 @@ import { Plus } from 'lucide-react';
 import { APIKit } from '@/common/helpers/APIKit';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 const testSchema = z.object({
   item_name: z.string().min(1, 'Item name is required'),
@@ -29,7 +30,9 @@ const groupeSchema = z.object({
 });
 
 export default function Page() {
+  const router = useRouter();
   const [groupeLoading, setGroupeLoading] = useState(false);
+  const [testLoading, setTestLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -50,24 +53,25 @@ export default function Page() {
   });
 
   const onSubmitTest = (data: z.infer<typeof testSchema>) => {
-    setGroupeLoading(true);
+    setTestLoading(true);
     console.log(data);
 
     APIKit.Test.AddTest(data)
       .then(() => {
         toast.success('Test added successfully');
+        router.back();
       })
       .catch(() => {
         toast.error('Something went wrong');
       })
       .finally(() => {
-        setGroupeLoading(false); // ✅ End loading
+        setTestLoading(false); // ✅ End loading
         reset();
       });
   };
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['get-Allappointment-14a54'],
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['get-groupe-14a54'],
     queryFn: async () => {
       try {
         const res = await APIKit.Test.getGroupe();
@@ -92,6 +96,7 @@ export default function Page() {
     APIKit.Test.AddGroupe(data)
       .then(() => {
         toast.success('Groupe added successfully');
+        refetch();
       })
       .catch(() => {
         toast.error('Something went wrong');
@@ -189,7 +194,7 @@ export default function Page() {
             />
           </div>
           <div className="w-full flex justify-end">
-            <Button isLoading={groupeLoading} type="submit" className="text-xs">
+            <Button isLoading={testLoading} type="submit" className="text-xs">
               <Plus /> Add Test
             </Button>
           </div>

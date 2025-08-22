@@ -7,9 +7,9 @@ import { TeamSwitcher } from '@/components/team-switcher';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
 import {
   FaCodeBranch,
-  FaFilePrescription,
   FaHospitalUser,
   FaNotesMedical,
+  FaUsers,
   FaUserShield,
   FaWallet,
 } from 'react-icons/fa6';
@@ -21,7 +21,7 @@ import { FaList, FaPills } from 'react-icons/fa';
 import { FaUserTie, FaShareAlt } from 'react-icons/fa';
 import { MdScience } from 'react-icons/md';
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: usernname, isLoading } = useQuery({
+  const { data: usernname } = useQuery({
     queryKey: ['getUser-name-34'],
     queryFn: async () => {
       const res = await APIKit.doctor.getDoctorName();
@@ -99,10 +99,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         isActive: true,
         items: [
           {
-            title: 'Add Patient',
-            url: `/${usernname?.data?.user_id}/add-patient`,
-          },
-          {
             title: 'All Patient',
             url: `/${usernname?.data?.user_id}/all-patient`,
           },
@@ -114,10 +110,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: FaServicestack,
         isActive: true,
         items: [
-          {
-            title: 'Add Service',
-            url: `/${usernname?.data?.user_id}/add-services`,
-          },
           {
             title: 'All Services',
             url: `/${usernname?.data?.user_id}/all-services`,
@@ -184,19 +176,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'Create Bill',
-            url: `/${usernname?.data?.user_id}/create-bill`,
+            url: `/${usernname?.data?.user_id}/billing`,
           },
           {
             title: 'All Bill',
             url: `/${usernname?.data?.user_id}/all-bill`,
           },
           {
-            title: 'Transaction',
-            url: `/${usernname?.data?.user_id}/all-transaction`,
-          },
-          {
-            title: 'Due',
-            url: `/${usernname?.data?.user_id}/Due-bill`,
+            title: 'All Dues',
+            url: `/${usernname?.data?.user_id}/all-dues`,
           },
           {
             title: 'report',
@@ -211,12 +199,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         isActive: true,
         items: [
           {
-            title: 'Add Referance',
-            url: `/${usernname?.data?.user_id}/add-referance`,
-          },
-          {
             title: 'All Referance',
-            url: `/${usernname?.data?.user_id}/all-referance`,
+            url: `/${usernname?.data?.user_id}/all-references`,
           },
         ],
       },
@@ -233,14 +217,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ],
       },
       {
-        title: 'Branch',
+        title: 'Employee',
         url: '#',
-        icon: FaCodeBranch,
+        icon: FaUsers,
         isActive: true,
         items: [
           {
-            title: 'All Branches',
-            url: `/${usernname?.data?.user_id}/all-referance`,
+            title: 'All Employee',
+            url: `/${usernname?.data?.user_id}/all-employee`,
           },
         ],
       },
