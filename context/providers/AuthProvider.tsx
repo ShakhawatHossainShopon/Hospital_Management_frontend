@@ -51,9 +51,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       toast.success(res.message);
       Cookies.remove('accessToken');
       Cookies.remove('userid');
-      router.push('/login');
     } finally {
       setLogoutLoading(false);
+      router.push('/login');
     }
   };
 

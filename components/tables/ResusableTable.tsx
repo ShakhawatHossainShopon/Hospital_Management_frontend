@@ -1,19 +1,25 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-
+import { Pagination } from '../Pagination';
+type PaginationMeta = {
+  current_page: number;
+  last_page: number;
+  total: number;
+};
 type ReusableTableProps<T> = {
   caption?: string;
   headers: string[];
   data?: T[];
   isLoading: boolean;
   renderRow: (item: T, index: number) => React.ReactNode;
+  pagination?: PaginationMeta;
+  onPageChange?: (page: number) => void;
 };
 
 export function ReusableTable<T>({
@@ -22,11 +28,12 @@ export function ReusableTable<T>({
   data = [],
   isLoading,
   renderRow,
+  pagination,
+  onPageChange,
 }: ReusableTableProps<T>) {
   return (
     <div>
       <Table>
-        {caption && <TableCaption className="text-xs">{caption}</TableCaption>}
         <TableHeader>
           <TableRow>
             {headers.map((head, i) => (
@@ -59,6 +66,15 @@ export function ReusableTable<T>({
           )}
         </TableBody>
       </Table>
+      {pagination && onPageChange && (
+        <div className="flex justify-end">
+          <Pagination
+            currentPage={pagination.current_page}
+            lastPage={pagination.last_page}
+            onPageChange={onPageChange}
+          />
+        </div>
+      )}
     </div>
   );
 }
