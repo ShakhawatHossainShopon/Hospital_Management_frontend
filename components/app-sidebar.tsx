@@ -223,8 +223,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         isActive: true,
         items: [
           {
-            title: 'All Employee',
-            url: `/${usernname?.data?.user_id}/all-employee`,
+            title: 'All Employees',
+            url: `/${usernname?.data?.user_id}/all-employees`,
           },
         ],
       },

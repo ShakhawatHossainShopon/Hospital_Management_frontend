@@ -184,5 +184,19 @@ export const APIKit = {
             const url = `/bills/reports?page=${page}&mobile_phone=${phone}`;
             return client.get(url);
         },
+    },
+    employees: {
+        allEmployees: () => {
+            const url = `/employees`;
+            return client.get(url);
+        },
+        DeleteEmployee: (id: any) => {
+            const url = `employees/${id}`;
+            return client.delete(url);
+        },
+        AddEmployee: (payload: any) => {
+            const url = `employees`;
+            return client.post(url, payload);
+        },
     }
 };
