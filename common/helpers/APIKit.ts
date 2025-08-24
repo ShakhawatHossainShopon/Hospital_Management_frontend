@@ -184,5 +184,41 @@ export const APIKit = {
             const url = `/bills/reports?page=${page}&mobile_phone=${phone}`;
             return client.get(url);
         },
+    },
+    employees: {
+        allEmployees: () => {
+            const url = `/employees`;
+            return client.get(url);
+        },
+        DeleteEmployee: (id: any) => {
+            const url = `employees/${id}`;
+            return client.delete(url);
+        },
+        AddEmployee: (payload: any) => {
+            const url = `employees`;
+            return client.post(url, payload);
+        },
+    },
+    accounts: {
+        allAccounts: () => {
+            const url = `/accounts`;
+            return client.get(url);
+        },
+        dailyCash: () => {
+            const url = `/accounts/dailyCash`;
+            return client.get(url);
+        },
+        Addexpences: (payload: any) => {
+            const url = `/accounts/addDailyExpense`;
+            return client.post(url, payload);
+        },
+        AppoinmentCash: (doctorId: any, date: any) => {
+            const url = `accounts/daily-appointments-cash?date=${date}&doctor_id=${doctorId}`;
+            return client.get(url);
+        },
+        DailyCashHistory: (date: any) => {
+            const url = `/accounts/dailyCash?date=${date}`;
+            return client.get(url);
+        }
     }
 };

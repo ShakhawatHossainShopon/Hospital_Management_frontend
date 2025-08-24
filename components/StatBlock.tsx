@@ -40,7 +40,7 @@ const StatBlock = ({
             </p>
           </div>
           <p className="text-2xl font-semibold text-center text-gray-800">
-            {count} {anything && anything}
+            {count ? count : 0} {anything && anything}
           </p>
           <p className="text-xs text-center text-gray-500">{title}</p>
         </div>
