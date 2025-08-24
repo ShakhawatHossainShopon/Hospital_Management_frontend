@@ -25,7 +25,7 @@ const Page = () => {
   const router = useRouter();
   const headers = ['Service Name', 'Unit Price', 'Description', 'Date', 'Actions'];
   const { data, isLoading, refetch } = useQuery<Service[]>({
-    queryKey: ['get-Allappointment-14a54'],
+    queryKey: ['get-services'],
     queryFn: async () => {
       const res = await APIKit.services.AllServices();
       return res?.data;

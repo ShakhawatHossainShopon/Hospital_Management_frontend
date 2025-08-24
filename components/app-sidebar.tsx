@@ -5,14 +5,7 @@ import { Hospital } from 'lucide-react';
 import { NavMain } from '@/components/nav-main';
 import { TeamSwitcher } from '@/components/team-switcher';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
-import {
-  FaCodeBranch,
-  FaHospitalUser,
-  FaNotesMedical,
-  FaUsers,
-  FaUserShield,
-  FaWallet,
-} from 'react-icons/fa6';
+import { FaHospitalUser, FaNotesMedical, FaUsers, FaUserShield, FaWallet } from 'react-icons/fa6';
 import { IoPeople } from 'react-icons/io5';
 import { APIKit } from '@/common/helpers/APIKit';
 import { useQuery } from '@tanstack/react-query';
@@ -211,8 +204,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         isActive: true,
         items: [
           {
-            title: 'All Accounts',
-            url: `/${usernname?.data?.user_id}/all-referance`,
+            title: 'Accounts',
+            url: `/${usernname?.data?.user_id}/all-accounts`,
+          },
+          {
+            title: 'Daily Cash',
+            url: `/${usernname?.data?.user_id}/daily-cash`,
+          },
+          {
+            title: 'Daily Expence',
+            url: `/${usernname?.data?.user_id}/expences`,
+          },
+          {
+            title: 'Appoinemnts Cash',
+            url: `/${usernname?.data?.user_id}/appoinment-cash`,
+          },
+          {
+            title: 'Daily Cash history',
+            url: `/${usernname?.data?.user_id}/daily-cash-history`,
           },
         ],
       },
