@@ -33,8 +33,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const login = async (userData: Exclude<User, null>) => {
     setLoginLoading(true);
     try {
-      const id = await loginService(userData);
-      router.push(`/${id}`); // Redirect here after success
+      const data = await loginService(userData);
+      if (data?.role === 'admin') {
+        router.push(`/admin`);
+      } else if (data?.role === 'employee') {
+        router.push(`/employee/${data?.admin_id}`);
+      }
       toast.success('Logged in successfully!');
     } catch (error) {
       toast.error('Invalid email and password');
@@ -51,10 +55,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       toast.success(res.message);
       Cookies.remove('accessToken');
       Cookies.remove('userid');
-    } finally {
-      setLogoutLoading(false);
       router.push('/login');
+    } catch (err) {
+      toast.error('something went wrong');
+      console.log(err);
     }
+    setLogoutLoading(false);
   };
 
   return (

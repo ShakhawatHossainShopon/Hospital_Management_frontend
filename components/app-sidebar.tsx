@@ -29,21 +29,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   navArray.push(
     {
       title: 'Book New',
-      url: `/${usernname?.data?.user_id}/book-new`,
+      url: `/employee/${usernname?.data?.user_id}/book-new`,
     },
     {
       title: 'Manage',
-      url: `/${usernname?.data?.user_id}/appoinments`,
+      url: `/employee/${usernname?.data?.user_id}/appoinments`,
     },
     {
       title: 'Follow Ups',
-      url: `/${usernname?.data?.user_id}/follow-ups`,
+      url: `/employee/${usernname?.data?.user_id}/follow-ups`,
     }
   );
   usernname?.data?.doctors?.map((user: { name: string; id: number }) => {
     navArray.push({
       title: `${user?.name}`,
-      url: `/${usernname?.data?.user_id}/doctor/${user?.id}`,
+      url: `/employee/${usernname?.data?.user_id}/doctor/${user?.id}`,
       icon: FaUserTie,
     });
   });
@@ -70,11 +70,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'Manage',
-            url: `/${usernname?.data?.user_id}/doctor`,
+            url: `/employee/${usernname?.data?.user_id}/doctor`,
           },
           {
             title: 'Statements',
-            url: `/${usernname?.data?.user_id}/doctor/statements`,
+            url: `/employee/${usernname?.data?.user_id}/doctor/statements`,
           },
         ],
       },
@@ -93,7 +93,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'All Patient',
-            url: `/${usernname?.data?.user_id}/all-patient`,
+            url: `/employee/${usernname?.data?.user_id}/all-patient`,
           },
         ],
       },
@@ -105,7 +105,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'All Services',
-            url: `/${usernname?.data?.user_id}/all-services`,
+            url: `/employee/${usernname?.data?.user_id}/all-services`,
           },
         ],
       },
@@ -117,7 +117,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'All Diagnostic test',
-            url: `/${usernname?.data?.user_id}/all-test`,
+            url: `/employee/${usernname?.data?.user_id}/all-test`,
           },
         ],
       },
@@ -129,11 +129,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'Add Medicine',
-            url: `/${usernname?.data?.user_id}/add-medicine`,
+            url: `/employee/${usernname?.data?.user_id}/add-medicine`,
           },
           {
             title: 'All Medicine',
-            url: `/${usernname?.data?.user_id}/all-medicine`,
+            url: `/employee/${usernname?.data?.user_id}/all-medicine`,
           },
         ],
       },
@@ -169,19 +169,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'Create Bill',
-            url: `/${usernname?.data?.user_id}/billing`,
+            url: `/employee/${usernname?.data?.user_id}/billing`,
           },
           {
             title: 'All Bill',
-            url: `/${usernname?.data?.user_id}/all-bill`,
+            url: `/employee/${usernname?.data?.user_id}/all-bill`,
           },
           {
             title: 'All Dues',
-            url: `/${usernname?.data?.user_id}/all-dues`,
+            url: `/employee/${usernname?.data?.user_id}/all-dues`,
           },
           {
             title: 'report',
-            url: `/${usernname?.data?.user_id}/billing-report`,
+            url: `/employee/${usernname?.data?.user_id}/billing-report`,
           },
         ],
       },
@@ -193,7 +193,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'All Referance',
-            url: `/${usernname?.data?.user_id}/all-references`,
+            url: `/employee/${usernname?.data?.user_id}/all-references`,
           },
         ],
       },
@@ -205,23 +205,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'Accounts',
-            url: `/${usernname?.data?.user_id}/all-accounts`,
+            url: `/employee/${usernname?.data?.user_id}/all-accounts`,
           },
           {
             title: 'Daily Cash',
-            url: `/${usernname?.data?.user_id}/daily-cash`,
+            url: `/employee/${usernname?.data?.user_id}/daily-cash`,
           },
           {
             title: 'Daily Expence',
-            url: `/${usernname?.data?.user_id}/expences`,
+            url: `/employee/${usernname?.data?.user_id}/expences`,
           },
           {
             title: 'Appoinemnts Cash',
-            url: `/${usernname?.data?.user_id}/appoinment-cash`,
+            url: `/employee/${usernname?.data?.user_id}/appoinment-cash`,
           },
           {
             title: 'Daily Cash history',
-            url: `/${usernname?.data?.user_id}/daily-cash-history`,
+            url: `/employee/${usernname?.data?.user_id}/daily-cash-history`,
           },
         ],
       },
@@ -233,7 +233,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'All Employees',
-            url: `/${usernname?.data?.user_id}/all-employees`,
+            url: `/employee/${usernname?.data?.user_id}/all-employees`,
           },
         ],
       },
@@ -245,7 +245,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: 'Admin',
-            url: `/${usernname?.data?.user_id}/all-referance`,
+            url: `/employee/${usernname?.data?.user_id}/all-referance`,
           },
         ],
       },

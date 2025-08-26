@@ -7,9 +7,15 @@ const Page = async () => {
   const cookieStore = await cookies(); // <-- await here
   const tokenFromCookie = cookieStore.get('accessToken');
   const userIdFromCookie = cookieStore.get('userid');
+  const role = cookieStore.get('role');
 
   if (tokenFromCookie) {
-    redirect(`/${userIdFromCookie?.value}`);
+    if (role?.value === 'employee') {
+      redirect(`/employee/${userIdFromCookie?.value}`);
+    } else if (role?.value === 'admin') {
+      redirect(`/admin/${userIdFromCookie?.value}`);
+    }
+    redirect(`/employee/${userIdFromCookie?.value}`);
   } else {
     return (
       <div className="bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">

@@ -220,5 +220,17 @@ export const APIKit = {
             const url = `/accounts/dailyCash?date=${date}`;
             return client.get(url);
         }
+    },
+    admin: {
+        doctor: {
+            getDoctor: () => {
+                const url = `admin/doctors`;
+                return client.get(url);
+            },
+            getDoctorName: () => {
+                const url = `admin/doctors/doctor-names`;
+                return client.get(url);
+            },
+        }
     }
 };

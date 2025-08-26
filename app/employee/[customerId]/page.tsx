@@ -7,11 +7,11 @@ import Cookies from 'js-cookie';
 export default function Page() {
   const router = useRouter();
   const params = useParams();
-  const userIdFromCookie = Cookies.get('userid');
+  const userIdFromCookie = Cookies.get('admin_id');
 
   useEffect(() => {
     if (params.customerId !== userIdFromCookie) {
-      router.push(`/${userIdFromCookie}`);
+      router.push(`/`);
     }
   }, [params.customerId, userIdFromCookie, router]);
 

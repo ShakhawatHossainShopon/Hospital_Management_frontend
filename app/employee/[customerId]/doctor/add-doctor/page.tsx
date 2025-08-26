@@ -286,7 +286,7 @@ const Page = () => {
           />
         </div>
         <div className="flex w-full justify-end">
-          <Button className="mt-3 text-xs" type="submit">
+          <Button isLoading={loading} className="mt-3 text-xs" type="submit">
             <Plus /> Add New Doctor
           </Button>
         </div>

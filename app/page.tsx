@@ -4,12 +4,17 @@ import { redirect } from 'next/navigation';
 const Page = async () => {
   const cookieStore = await cookies(); // <-- await here
   const tokenFromCookie = cookieStore.get('accessToken');
-  const userIdFromCookie = cookieStore.get('userid');
+  const AdminFromCookie = cookieStore.get('admin_id');
+  const role = cookieStore.get('role');
 
   if (!tokenFromCookie) {
     redirect(`/login`);
   } else {
-    redirect(`/${userIdFromCookie?.value}`);
+    if (role?.value === 'employee') {
+      redirect(`/employee/${AdminFromCookie?.value}`);
+    } else if (role?.value === 'admin') {
+      redirect(`/admin`);
+    }
   }
 
   return null;
