@@ -1,5 +1,5 @@
 'use client';
-
+import { FaServicestack } from 'react-icons/fa';
 import * as React from 'react';
 import { Hospital } from 'lucide-react';
 import { NavMain } from '@/components/nav-main';
@@ -8,6 +8,7 @@ import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from '@/component
 import { FaHospitalUser, FaUsers, FaUserShield, FaWallet } from 'react-icons/fa6';
 import { IoPeople } from 'react-icons/io5';
 import { FaFileInvoiceDollar, FaClinicMedical } from 'react-icons/fa';
+import { MdScience } from 'react-icons/md';
 export function AdminAppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const data = {
     user: {
@@ -120,6 +121,30 @@ export function AdminAppSidebar({ ...props }: React.ComponentProps<typeof Sideba
           {
             title: 'All Employees',
             url: `all-employees`,
+          },
+        ],
+      },
+      {
+        title: 'All Services',
+        url: '#',
+        icon: FaServicestack,
+        isActive: true,
+        items: [
+          {
+            title: 'All Services',
+            url: `admin/all-services`,
+          },
+        ],
+      },
+      {
+        title: 'Diagnostic Test',
+        url: '#',
+        icon: MdScience,
+        isActive: true,
+        items: [
+          {
+            title: 'All Diagnostic test',
+            url: `admin/all-test`,
           },
         ],
       },

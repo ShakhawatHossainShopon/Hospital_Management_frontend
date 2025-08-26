@@ -271,15 +271,14 @@ export function SceduleSlotTable() {
                   {formatTo12Hour(slots.time.slice(0, -3))}
                 </TableCell>
                 <TableCell className="min-w-[100px] text-blue-600 font-medium">
-                  <Link href={`/${customerId}/patientProfile/${slots?.patient_id}`}>
-                    <span>{slots?.name}</span>
-                  </Link>
-
+                  <p>
+                    <Link href={`/employee/${customerId}/patientProfile/${slots?.patient_id}`}>
+                      <span>{slots?.name}</span>
+                    </Link>
+                  </p>
                   {slots?.type == 'New' ? (
-                    <Link href={`/${customerId}/patientProfile/${slots?.patient_id}`}>
-                      <span className=" text-red-800 font-[6px] cursor-pointer font-light">
-                        (signup)
-                      </span>
+                    <Link href={`/employee/${customerId}/updatePatient/${slots?.patient_id}`}>
+                      <p className=" text-red-800 cursor-pointer ">(signup)</p>
                     </Link>
                   ) : null}
                 </TableCell>
@@ -327,7 +326,7 @@ export function SceduleSlotTable() {
                     <DropdownMenuContent className="text-xs" align="end">
                       <DropdownMenuItem className="text-xs font-medium text-yellow-500">
                         <Link
-                          href={`/${customerId}/create-appoinment-bill/${slots?.appointment_id}`}
+                          href={`/employee/${customerId}/create-appoinment-bill/${slots?.appointment_id}`}
                         >
                           Create Appointment bill
                         </Link>

@@ -5,14 +5,13 @@ import { Hospital } from 'lucide-react';
 import { NavMain } from '@/components/nav-main';
 import { TeamSwitcher } from '@/components/team-switcher';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarRail } from '@/components/ui/sidebar';
-import { FaHospitalUser, FaNotesMedical, FaUsers, FaUserShield, FaWallet } from 'react-icons/fa6';
+import { FaHospitalUser, FaNotesMedical, FaUserShield, FaWallet } from 'react-icons/fa6';
 import { IoPeople } from 'react-icons/io5';
 import { APIKit } from '@/common/helpers/APIKit';
 import { useQuery } from '@tanstack/react-query';
-import { FaServicestack, FaFileInvoiceDollar, FaClinicMedical } from 'react-icons/fa';
+import { FaFileInvoiceDollar, FaClinicMedical } from 'react-icons/fa';
 import { FaList, FaPills } from 'react-icons/fa';
 import { FaUserTie, FaShareAlt } from 'react-icons/fa';
-import { MdScience } from 'react-icons/md';
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: usernname } = useQuery({
     queryKey: ['getUser-name-34'],
@@ -94,30 +93,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {
             title: 'All Patient',
             url: `/employee/${usernname?.data?.user_id}/all-patient`,
-          },
-        ],
-      },
-      {
-        title: 'All Services',
-        url: '#',
-        icon: FaServicestack,
-        isActive: true,
-        items: [
-          {
-            title: 'All Services',
-            url: `/employee/${usernname?.data?.user_id}/all-services`,
-          },
-        ],
-      },
-      {
-        title: 'Diagnostic Test',
-        url: '#',
-        icon: MdScience,
-        isActive: true,
-        items: [
-          {
-            title: 'All Diagnostic test',
-            url: `/employee/${usernname?.data?.user_id}/all-test`,
           },
         ],
       },
@@ -222,18 +197,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           {
             title: 'Daily Cash history',
             url: `/employee/${usernname?.data?.user_id}/daily-cash-history`,
-          },
-        ],
-      },
-      {
-        title: 'Employee',
-        url: '#',
-        icon: FaUsers,
-        isActive: true,
-        items: [
-          {
-            title: 'All Employees',
-            url: `/employee/${usernname?.data?.user_id}/all-employees`,
           },
         ],
       },

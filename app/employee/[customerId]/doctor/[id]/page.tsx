@@ -15,7 +15,7 @@ const Page = () => {
         <h4 className="text-lg font-medium">All Scedules</h4>
         <Button
           size="sm"
-          onClick={() => router.push(`/${customerId}/doctor/${id}/manage-schedule`)}
+          onClick={() => router.push(`/employee/${customerId}/doctor/${id}/manage-schedule`)}
           variant={'outline'}
           className="text-xs py-1 px-4 border-indigo-600 text-indigo-600"
         >
