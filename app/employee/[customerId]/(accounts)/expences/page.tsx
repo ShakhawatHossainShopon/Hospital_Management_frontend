@@ -18,7 +18,7 @@ const Page = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['get-services'],
     queryFn: async () => {
-      const res = await APIKit.accounts.dailyCash();
+      const res = await APIKit.accounts.EmployeeDailyCash();
       return res?.data;
     },
   });

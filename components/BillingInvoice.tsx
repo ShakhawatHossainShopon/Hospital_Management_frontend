@@ -75,7 +75,7 @@ const BillingInvoice = ({
       .createBill(payload)
       .then(() => {
         toast.success('Bill added successfully');
-        router.push(`/${customerId}/all-bill`);
+        router.push(`/employee/${customerId}/all-bill`);
       })
       .catch(() => {
         toast.error('Something went wrong');

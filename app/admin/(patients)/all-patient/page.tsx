@@ -18,7 +18,7 @@ const Page = () => {
   } = useQuery({
     queryKey: ['get-patients-1434'],
     queryFn: async () => {
-      const res = await APIKit.patient.getPatient();
+      const res = await APIKit.patient.getpatientadmin();
       return res.data?.patients;
     },
   });

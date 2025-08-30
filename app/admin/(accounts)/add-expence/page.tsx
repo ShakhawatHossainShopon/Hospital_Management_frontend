@@ -65,7 +65,7 @@ const Page = () => {
               <div className="w-full">
                 <Input
                   type="number"
-                  label="Position"
+                  label="price"
                   required={true}
                   placeholder="Enter Price"
                   {...register('price')}

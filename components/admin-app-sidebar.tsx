@@ -76,11 +76,11 @@ export function AdminAppSidebar({ ...props }: React.ComponentProps<typeof Sideba
           },
           {
             title: 'All Dues',
-            url: `all-dues`,
+            url: `/admin/all-dues`,
           },
           {
             title: 'report',
-            url: `billing-report`,
+            url: `/admin/billing-report`,
           },
         ],
       },
@@ -92,23 +92,23 @@ export function AdminAppSidebar({ ...props }: React.ComponentProps<typeof Sideba
         items: [
           {
             title: 'Accounts',
-            url: `all-accounts`,
+            url: `/admin/all-accounts`,
           },
           {
             title: 'Daily Cash',
-            url: `daily-cash`,
+            url: `/admin/daily-cash`,
           },
           {
             title: 'Daily Expence',
-            url: `expences`,
+            url: `/admin/expences`,
           },
           {
             title: 'Appoinemnts Cash',
-            url: `appoinment-cash`,
+            url: `/admin/appoinment-cash`,
           },
           {
             title: 'Daily Cash history',
-            url: `daily-cash-history`,
+            url: `/admin/daily-cash-history`,
           },
         ],
       },
@@ -120,7 +120,7 @@ export function AdminAppSidebar({ ...props }: React.ComponentProps<typeof Sideba
         items: [
           {
             title: 'All Employees',
-            url: `all-employees`,
+            url: `/admin/all-employees`,
           },
         ],
       },
@@ -132,7 +132,7 @@ export function AdminAppSidebar({ ...props }: React.ComponentProps<typeof Sideba
         items: [
           {
             title: 'All Services',
-            url: `admin/all-services`,
+            url: `/admin/all-services`,
           },
         ],
       },
@@ -144,7 +144,7 @@ export function AdminAppSidebar({ ...props }: React.ComponentProps<typeof Sideba
         items: [
           {
             title: 'All Diagnostic test',
-            url: `admin/all-test`,
+            url: `/admin/all-test`,
           },
         ],
       },

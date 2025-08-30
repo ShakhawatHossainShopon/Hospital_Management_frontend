@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { ReusableTable } from '@/components/tables/ResusableTable';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { DateOnly } from './../../../../components/DateOnly';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,14 +15,12 @@ import { Input } from '@/components/ui/input';
 import { ReusableSelect } from '@/components/ui/SelectComp';
 import { Button } from '@/components/ui/button';
 import { useParams, useRouter } from 'next/navigation';
-interface Patient {
-  id: number;
+import { DateOnly } from '@/components/DateOnly';
+
+interface Bill {
   firstname: string;
   lastname: string;
   mobile_phone: string;
-}
-
-interface Bill {
   id: number;
   invoice_data: string;
   refer_id: number;
@@ -41,7 +38,6 @@ interface Bill {
   user_id: number;
   created_at: string;
   updated_at: string;
-  patient: Patient;
 }
 
 interface BillResponse {
@@ -154,12 +150,12 @@ const Page = () => {
         renderRow={(value: Bill, i) => (
           <TableRow key={i}>
             <TableCell className="text-blue-600 text-[12px] font-medium">
-              {value?.patient.firstname} {value?.patient.lastname}
+              {value?.firstname} {value?.lastname}
             </TableCell>
-            <TableCell>{value.patient.mobile_phone}</TableCell>
+            <TableCell>{value?.mobile_phone}</TableCell>
             <TableCell>{value?.id}</TableCell>
-            <TableCell>{value.total_amount} BDT</TableCell>
-            <TableCell>{value.discount} BDT</TableCell>
+            <TableCell>{value?.total_amount} BDT</TableCell>
+            <TableCell>{value?.discount} BDT</TableCell>
             <TableCell>{value?.payable_amount}</TableCell>
             <TableCell>
               {value?.paid_amount} BDT <br />{' '}

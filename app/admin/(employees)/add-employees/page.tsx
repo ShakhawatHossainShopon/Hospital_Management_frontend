@@ -12,6 +12,11 @@ const formSchema = z.object({
   name: z.string().min(1),
   position: z.string().min(1),
   email: z.string().min(1),
+  password: z
+    .string()
+    .min(8, { message: 'Password must be at least 8 characters' })
+    .regex(/[a-zA-Z]/, { message: 'Password must include at least one letter' })
+    .regex(/[0-9]/, { message: 'Password must include at least one number' }),
 });
 
 const Page = () => {
@@ -82,6 +87,19 @@ const Page = () => {
                   placeholder="Enter Your Email"
                   {...register('email')}
                   error={errors.email?.message}
+                />
+              </div>
+            </div>
+
+            <div className="md:flex gap-6 w-full">
+              <div className="w-full">
+                <Input
+                  label="Password"
+                  type="password"
+                  required={true}
+                  placeholder="Enter Your Password"
+                  {...register('password')}
+                  error={errors.password?.message}
                 />
               </div>
             </div>

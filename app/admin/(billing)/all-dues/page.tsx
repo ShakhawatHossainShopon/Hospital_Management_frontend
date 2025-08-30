@@ -4,7 +4,6 @@ import { APIKit } from '@/common/helpers/APIKit';
 import { DateOnly } from '@/components/DateOnly';
 import StatBlock from '@/components/StatBlock';
 import { ReusableTable } from '@/components/tables/ResusableTable';
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { TableCell, TableRow } from '@/components/ui/table';
 
 import { useQuery } from '@tanstack/react-query';
-import { ChevronDown, Plus } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -34,8 +33,7 @@ const Page = () => {
   const [page, setPage] = React.useState(1);
   const [phone, setPhone] = useState('');
   const [debouncedPhone, setDebouncedPhone] = useState<string>();
-  const { customerId } = useParams();
-  const router = useRouter();
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedPhone(phone);
@@ -46,7 +44,7 @@ const Page = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['get-Due-bills', page, debouncedPhone],
     queryFn: async () => {
-      const res = await APIKit.billing.AllDues(page, debouncedPhone);
+      const res = await APIKit.billing.AllDuesAdmin(page, debouncedPhone);
       return res.data;
     },
   });
@@ -79,9 +77,9 @@ const Page = () => {
         renderRow={(value: any, i) => (
           <TableRow key={i}>
             <TableCell className="text-blue-600 text-[12px] font-medium">
-              {value?.patient.firstname} {value?.patient.lastname}
+              {value?.firstname} {value?.lastname}
             </TableCell>
-            <TableCell>{value.patient.mobile_phone}</TableCell>
+            <TableCell>{value?.mobile_phone}</TableCell>
             <TableCell>{value?.id}</TableCell>
             <TableCell>{value.total_amount} BDT</TableCell>
             <TableCell>{value.discount} BDT</TableCell>

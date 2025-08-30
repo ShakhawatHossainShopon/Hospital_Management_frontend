@@ -21,8 +21,18 @@ const Page = () => {
     <div>
       <div className="mb-6 flex items-center gap-6">
         <StatBlock title="Total Bill Counts" count={data?.total_paid_bills} positive={true} />
-        <StatBlock title="All Paid Bills" count={data?.total_paid_appointments} positive={true} />
-        <StatBlock title="All Total Amount" count={data?.grand_total} positive={true} />
+        <StatBlock
+          title="All Paid Bills"
+          anything="BDT"
+          count={data?.total_paid_appointments}
+          positive={true}
+        />
+        <StatBlock
+          title="All Total Amount"
+          count={data?.grand_total}
+          anything="BDT"
+          positive={true}
+        />
       </div>
     </div>
   );

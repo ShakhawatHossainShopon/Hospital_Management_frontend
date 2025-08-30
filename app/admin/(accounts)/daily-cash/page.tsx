@@ -32,7 +32,12 @@ const Page = () => {
             count={data?.total_paid_appointments}
             positive={true}
           />
-          <StatBlock title="All Paid Bills" count={data?.total_paid_bills} positive={true} />
+          <StatBlock
+            anything="BDT"
+            title="All Paid Bills"
+            count={data?.total_paid_bills}
+            positive={true}
+          />
           <StatBlock
             title="All Total Amount"
             count={data?.grand_total}

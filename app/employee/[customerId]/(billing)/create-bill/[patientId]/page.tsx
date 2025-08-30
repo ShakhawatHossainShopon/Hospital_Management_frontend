@@ -23,6 +23,7 @@ const Page = () => {
       return res?.data;
     },
   });
+  console.log(data);
 
   const testOptions =
     data?.tests?.map((value: any) => ({

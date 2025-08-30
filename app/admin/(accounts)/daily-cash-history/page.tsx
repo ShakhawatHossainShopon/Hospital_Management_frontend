@@ -15,7 +15,7 @@ const Page = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['appointment-cash', date],
     queryFn: async () => {
-      const res = await APIKit.accounts.DailyCashHistory(date);
+      const res = await APIKit.accounts.AdminDailyCashHistory(date);
       return res?.data;
     },
     enabled: !!date,

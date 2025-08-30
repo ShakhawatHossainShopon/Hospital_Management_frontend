@@ -55,7 +55,7 @@ const Page = () => {
         <h4 className="font-medium mb-6">All References</h4>
         <Button
           size="sm"
-          onClick={() => router.push(`/${customerId}/add-reference`)}
+          onClick={() => router.push(`/employee/${customerId}/add-reference`)}
           variant={'outline'}
           className="text-xs py-1 px-4 border-indigo-600 text-indigo-600"
         >

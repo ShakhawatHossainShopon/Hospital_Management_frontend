@@ -6,7 +6,7 @@ import { ReusableTable } from '@/components/tables/ResusableTable';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { DateOnly } from './../../../../components/DateOnly';
+import { DateOnly } from '@/components/DateOnly';
 
 const Page = () => {
   const headers = ['ID', 'Name', 'Price', 'Date'];
@@ -14,7 +14,7 @@ const Page = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['get-accounts'],
     queryFn: async () => {
-      const res = await APIKit.accounts.dailyCash();
+      const res = await APIKit.accounts.EmployeeDailyCash();
       return res?.data;
     },
   });
@@ -28,11 +28,17 @@ const Page = () => {
         {' '}
         <div className="mb-6 flex flex-wrap items-center gap-6">
           <StatBlock
+            anything="BDT"
             title="Total Paid Appoinments"
             count={data?.total_paid_appointments}
             positive={true}
           />
-          <StatBlock title="All Paid Bills" count={data?.total_paid_bills} positive={true} />
+          <StatBlock
+            anything="BDT"
+            title="All Paid Bills"
+            count={data?.total_paid_bills}
+            positive={true}
+          />
           <StatBlock
             title="All Total Amount"
             count={data?.grand_total}

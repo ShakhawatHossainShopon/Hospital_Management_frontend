@@ -17,7 +17,7 @@ const Page = () => {
   const { data: doctorname, isLoading: isloadingDoctor } = useQuery({
     queryKey: ['getDoctorName-name-34'],
     queryFn: async () => {
-      const res = await APIKit.doctor.getDoctorName();
+      const res = await APIKit.admin.doctor.getDoctorName();
       return {
         data: res.data,
         status: res.status,
@@ -31,7 +31,7 @@ const Page = () => {
     queryKey: ['appointment-cash', doctorId, date],
     queryFn: async () => {
       if (!doctorId) return null;
-      const res = await APIKit.accounts.AppoinmentCash(doctorId, date);
+      const res = await APIKit.accounts.AdminAppoinmentCash(doctorId, date);
       return res?.data;
     },
     enabled: !!doctorId && !!date,

@@ -41,7 +41,7 @@ const PatientBillingCard = ({ data }: InputProps) => {
             )}
           </p>
         </div>
-        <Link href={`/${customerId}/create-bill/${data?.id}`}>
+        <Link href={`/employee/${customerId}/create-bill/${data?.id}`}>
           <Button size="sm" variant={'outline'} className="text-xs py-1 px-4">
             <Plus /> Create Bill
           </Button>

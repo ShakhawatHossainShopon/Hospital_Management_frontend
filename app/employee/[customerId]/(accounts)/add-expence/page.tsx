@@ -27,7 +27,7 @@ const Page = () => {
   const onSubmit = (data: FormData) => {
     setLoading(true);
     APIKit.accounts
-      .Addexpences(data)
+      .AddEmployeeExpense(data)
       .then(() => {
         toast.success('Expence added successfully');
         router.back();

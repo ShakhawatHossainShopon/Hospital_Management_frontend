@@ -12,7 +12,7 @@ import {
 import { TableCell, TableRow } from '@/components/ui/table';
 import { useQuery } from '@tanstack/react-query';
 import { ChevronDown } from 'lucide-react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { MdScience } from 'react-icons/md';
 import { toast } from 'react-toastify';
@@ -42,8 +42,6 @@ type Item = {
 const headers = ['Name', 'Code', 'Groupe', 'Description', 'Unit Price', 'Discount', 'Action'];
 const Page = () => {
   const router = useRouter();
-  const params = useParams();
-  const id = params.customerId;
   const { data, isLoading, refetch } = useQuery<Item[]>({
     queryKey: ['get-Allappointment-14a54'],
     queryFn: async () => {
@@ -75,7 +73,7 @@ const Page = () => {
         <h4 className="font-medium">All Test</h4>
         <Button
           size="sm"
-          onClick={() => router.push(`/${id}/add-test`)}
+          onClick={() => router.push(`/admin/add-test`)}
           variant={'outline'}
           className="text-xs py-1 px-4 border-indigo-600 text-indigo-600"
         >

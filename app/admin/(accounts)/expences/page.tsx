@@ -42,7 +42,7 @@ const Page = () => {
         <h4 className="font-medium mb-6">Daily Expenses</h4>
         <Button
           size="sm"
-          onClick={() => router.push(`/${customerId}/add-expence`)}
+          onClick={() => router.push(`/admin/add-expence`)}
           variant={'outline'}
           className="text-xs py-1 px-4 border-indigo-600 text-indigo-600"
         >

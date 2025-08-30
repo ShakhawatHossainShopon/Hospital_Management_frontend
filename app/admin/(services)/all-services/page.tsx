@@ -4,10 +4,8 @@ import { DateOnly } from '@/components/DateOnly';
 import { ReusableTable } from '@/components/tables/ResusableTable';
 import { Button } from '@/components/ui/button';
 import { TableCell, TableRow } from '@/components/ui/table';
-
 import { useQuery } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
-import { useParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { toast } from 'react-toastify';
@@ -21,13 +19,12 @@ interface Service {
   updated_at: string;
 }
 const Page = () => {
-  const { customerId } = useParams();
   const router = useRouter();
   const headers = ['Service Name', 'Unit Price', 'Description', 'Date', 'Actions'];
   const { data, isLoading, refetch } = useQuery<Service[]>({
     queryKey: ['get-services'],
     queryFn: async () => {
-      const res = await APIKit.services.AllServices();
+      const res = await APIKit.services.AllServicesAdmin();
       return res?.data;
     },
   });
@@ -48,7 +45,7 @@ const Page = () => {
         <h4 className="font-medium mb-6">All Services</h4>
         <Button
           size="sm"
-          onClick={() => router.push(`/${customerId}/add-services`)}
+          onClick={() => router.push(`/admin/add-services`)}
           variant={'outline'}
           className="text-xs py-1 px-4 border-indigo-600 text-indigo-600"
         >

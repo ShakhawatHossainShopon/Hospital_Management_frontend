@@ -103,10 +103,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         isActive: true,
         items: [
           {
-            title: 'Add Medicine',
-            url: `/employee/${usernname?.data?.user_id}/add-medicine`,
-          },
-          {
             title: 'All Medicine',
             url: `/employee/${usernname?.data?.user_id}/all-medicine`,
           },

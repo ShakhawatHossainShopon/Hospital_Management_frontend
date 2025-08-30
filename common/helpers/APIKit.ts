@@ -62,6 +62,10 @@ export const APIKit = {
             const url = `/patients/${id}`;
             return client.patch(url, payload);
         },
+        getpatientadmin: () => {
+            const url = `/admin/patient`;
+            return client.get(url);
+        },
     }
     ,
     Scedule: {
@@ -144,6 +148,10 @@ export const APIKit = {
             const url = `/services`;
             return client.get(url);
         },
+        AllServicesAdmin: () => {
+            const url = `/services/admin`;
+            return client.get(url);
+        },
         deleteService: (id: any) => {
             const url = `/services/${id}`;
             return client.delete(url);
@@ -176,12 +184,24 @@ export const APIKit = {
             const url = `/bills?page=${page}&mobile_phone=${phone}&from=${startDate}&to=${endDate}&filter=${filterDay}`;
             return client.get(url);
         },
+        AllBillAdmin: (phone: any, startDate: any, endDate: any, filterDay: any, page: any) => {
+            const url = `/bills/admin?page=${page}&mobile_phone=${phone}&from=${startDate}&to=${endDate}&filter=${filterDay}`;
+            return client.get(url);
+        },
         AllDues: (page: any, phone: any) => {
             const url = `/bills/duebills?mobile_phone=${phone}&page=${page}`;
             return client.get(url);
         },
+        AllDuesAdmin: (page: any, phone: any) => {
+            const url = `/bills/admin/duebills?mobile_phone=${phone}&page=${page}`;
+            return client.get(url);
+        },
         Reports: (page: any, phone: any) => {
             const url = `/bills/reports?page=${page}&mobile_phone=${phone}`;
+            return client.get(url);
+        },
+        adminReport: (page: any, phone: any) => {
+            const url = `/bills/admin/reports?page=${page}&mobile_phone=${phone}`;
             return client.get(url);
         },
     },
@@ -200,7 +220,15 @@ export const APIKit = {
         },
     },
     accounts: {
+        allAccountsAdmin: () => {
+            const url = `/accounts/admin`;
+            return client.get(url);
+        },
         allAccounts: () => {
+            const url = `/accounts/admin`;
+            return client.get(url);
+        },
+        AdminallAccounts: () => {
             const url = `/accounts`;
             return client.get(url);
         },
@@ -208,15 +236,31 @@ export const APIKit = {
             const url = `/accounts/dailyCash`;
             return client.get(url);
         },
+        EmployeeDailyCash: () => {
+            const url = `/accounts/EmployeeDailyCash`;
+            return client.get(url);
+        },
         Addexpences: (payload: any) => {
             const url = `/accounts/addDailyExpense`;
+            return client.post(url, payload);
+        },
+        AddEmployeeExpense: (payload: any) => {
+            const url = `/accounts/addDailyExpenseEmployee`;
             return client.post(url, payload);
         },
         AppoinmentCash: (doctorId: any, date: any) => {
             const url = `accounts/daily-appointments-cash?date=${date}&doctor_id=${doctorId}`;
             return client.get(url);
         },
+        AdminAppoinmentCash: (doctorId: any, date: any) => {
+            const url = `accounts/admin/daily-appointments-cash?date=${date}&doctor_id=${doctorId}`;
+            return client.get(url);
+        },
         DailyCashHistory: (date: any) => {
+            const url = `/accounts/EmployeeDailyCash?date=${date}`;
+            return client.get(url);
+        },
+        AdminDailyCashHistory: (date: any) => {
             const url = `/accounts/dailyCash?date=${date}`;
             return client.get(url);
         }

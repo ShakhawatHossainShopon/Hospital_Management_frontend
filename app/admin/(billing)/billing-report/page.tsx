@@ -41,7 +41,7 @@ const Page = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['get-reports', page, debouncedPhone],
     queryFn: async () => {
-      const res = await APIKit.billing.Reports(page, debouncedPhone);
+      const res = await APIKit.billing.adminReport(page, debouncedPhone);
       return res.data;
     },
   });
@@ -82,9 +82,9 @@ const Page = () => {
         renderRow={(value: any, i) => (
           <TableRow key={i}>
             <TableCell className="text-blue-600 text-[12px] font-medium">
-              {value?.patient.firstname} {value?.patient.lastname}
+              {value?.firstname} {value?.lastname}
             </TableCell>
-            <TableCell>{value.patient.mobile_phone}</TableCell>
+            <TableCell>{value.mobile_phone}</TableCell>
             <TableCell>{value?.id}</TableCell>
             <TableCell>{value.total_amount} BDT</TableCell>
             <TableCell>{value.discount} BDT</TableCell>

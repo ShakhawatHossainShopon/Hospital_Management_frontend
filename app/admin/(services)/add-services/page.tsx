@@ -70,7 +70,7 @@ const Page = () => {
                   type="number"
                   label="Unit Price"
                   required={true}
-                  placeholder="01712345678"
+                  placeholder="Enter Price"
                   {...register('unit_price')}
                   error={errors.unit_price?.message}
                 />
@@ -81,7 +81,7 @@ const Page = () => {
                 <Textarea
                   label="description"
                   required={true}
-                  placeholder="Enter Your Address"
+                  placeholder="Enter Your Description"
                   {...register('des')}
                   error={errors.des?.message}
                 />
