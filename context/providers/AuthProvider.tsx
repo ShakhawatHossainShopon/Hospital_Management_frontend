@@ -38,6 +38,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         router.push(`/admin`);
       } else if (data?.role === 'employee') {
         router.push(`/employee/${data?.admin_id}`);
+      } else if (data?.role === 'doctor') {
+        router.push(`/doctor`);
       }
       toast.success('Logged in successfully!');
     } catch (error) {

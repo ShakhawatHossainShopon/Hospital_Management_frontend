@@ -252,6 +252,7 @@ export const APIKit = {
             const url = `accounts/daily-appointments-cash?date=${date}&doctor_id=${doctorId}`;
             return client.get(url);
         },
+
         AdminAppoinmentCash: (doctorId: any, date: any) => {
             const url = `accounts/admin/daily-appointments-cash?date=${date}&doctor_id=${doctorId}`;
             return client.get(url);
@@ -265,6 +266,40 @@ export const APIKit = {
             return client.get(url);
         }
     },
+    medicine: {
+        allMedicine: (search: any, page: any) => {
+            const url = `/medicines?search=${search}&page=${page}`;
+            return client.get(url);
+        },
+        AddMedicine: (payload: any) => {
+            const url = `/medicines`;
+            return client.post(url, payload);
+        }
+    },
+
+    prescription: {
+        allPrescription: (page: any) => {
+            const url = `/prescriptions?page=${page}`;
+            return client.get(url);
+        },
+        addPrescription: (paylaod: any) => {
+            const url = `/prescriptions`;
+            return client.post(url, paylaod);
+        },
+        getAllPrescription: (page: any, date: any) => {
+            const url = `/prescriptions/all?page=${page}&date=${date}`;
+            return client.get(url);
+        },
+        getAllStatement: (page: any, date: any) => {
+            const url = `/prescriptions/statements?page=${page}&date=${date}`;
+            return client.get(url);
+        },
+        getAllAptCash: (date: any, page: any) => {
+            const url = `/prescriptions/cash?date=${date}&page=${page}`;
+            return client.get(url);
+        }
+    }
+    ,
     admin: {
         doctor: {
             getDoctor: () => {

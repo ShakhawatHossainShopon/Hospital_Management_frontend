@@ -52,18 +52,18 @@ export function AdminAppSidebar({ ...props }: React.ComponentProps<typeof Sideba
           },
         ],
       },
-      {
-        title: 'Pharmacy',
-        url: '#',
-        icon: FaClinicMedical,
-        isActive: true,
-        items: [
-          {
-            title: 'Add pharmacy',
-            url: `/`,
-          },
-        ],
-      },
+      // {
+      //   title: 'Pharmacy',
+      //   url: '#',
+      //   icon: FaClinicMedical,
+      //   isActive: true,
+      //   items: [
+      //     {
+      //       title: 'Add pharmacy',
+      //       url: `/`,
+      //     },
+      //   ],
+      // },
       {
         title: 'Billing',
         url: '#',

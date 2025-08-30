@@ -6,6 +6,7 @@ const Page = async () => {
   const tokenFromCookie = cookieStore.get('accessToken');
   const AdminFromCookie = cookieStore.get('admin_id');
   const role = cookieStore.get('role');
+  console.log(role);
 
   if (!tokenFromCookie) {
     redirect(`/login`);
@@ -14,6 +15,8 @@ const Page = async () => {
       redirect(`/employee/${AdminFromCookie?.value}`);
     } else if (role?.value === 'admin') {
       redirect(`/admin`);
+    } else if (role?.value === 'doctor') {
+      redirect(`/doctor`);
     }
   }
 

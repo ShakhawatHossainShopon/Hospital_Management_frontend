@@ -108,18 +108,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
         ],
       },
-      {
-        title: 'Pharmacy',
-        url: '#',
-        icon: FaClinicMedical,
-        isActive: true,
-        items: [
-          {
-            title: 'Add pharmacy',
-            url: `/`,
-          },
-        ],
-      },
+      // {
+      //   title: 'Pharmacy',
+      //   url: '#',
+      //   icon: FaClinicMedical,
+      //   isActive: true,
+      //   items: [
+      //     {
+      //       title: 'Add pharmacy',
+      //       url: `/`,
+      //     },
+      //   ],
+      // },
       {
         title: 'Prescription',
         url: '#',

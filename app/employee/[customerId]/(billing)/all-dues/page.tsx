@@ -33,8 +33,6 @@ const Page = () => {
   const [page, setPage] = React.useState(1);
   const [phone, setPhone] = useState('');
   const [debouncedPhone, setDebouncedPhone] = useState<string>();
-  const { customerId } = useParams();
-  const router = useRouter();
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedPhone(phone);
